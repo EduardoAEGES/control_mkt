@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tablero de Proyectos Integradores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap">
+<style>
+:root{
+  --ground:#EDF1F3; --surface:#FFFFFF; --surface-2:#F6F9FA; --sunken:#E4EAEE;
+  --ink:#121A20; --ink-2:#56646F; --ink-3:#8494A0;
+  --line:#D6DEE3; --line-soft:#E6ECEF;
+  --accent:#12505F; --accent-ink:#FFFFFF; --accent-soft:#DCEBEF;
+  --st0:#8A99A5; --st0-bg:#EFF3F5;
+  --st1:#B0722A; --st1-bg:#F8EEDE;
+  --st2:#AE463B; --st2-bg:#F8E5E2;
+  --st3:#2A7457; --st3-bg:#DFF0E8;
+  --shadow:0 1px 2px rgba(18,32,40,.06), 0 8px 24px rgba(18,32,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1316; --surface:#161E23; --surface-2:#1B252B; --sunken:#111A1E;
+    --ink:#E3EAEE; --ink-2:#94A3AD; --ink-3:#6B7B86;
+    --line:#29353D; --line-soft:#212C33;
+    --accent:#6DB9CD; --accent-ink:#08191E; --accent-soft:#15313A;
+    --st0:#7E8E9A; --st0-bg:#1D272D;
+    --st1:#DBA05A; --st1-bg:#31261A;
+    --st2:#DF8175; --st2-bg:#331F1C;
+    --st3:#61BC97; --st3-bg:#142C24;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1316; --surface:#161E23; --surface-2:#1B252B; --sunken:#111A1E;
+  --ink:#E3EAEE; --ink-2:#94A3AD; --ink-3:#6B7B86;
+  --line:#29353D; --line-soft:#212C33;
+  --accent:#6DB9CD; --accent-ink:#08191E; --accent-soft:#15313A;
+  --st0:#7E8E9A; --st0-bg:#1D272D;
+  --st1:#DBA05A; --st1-bg:#31261A;
+  --st2:#DF8175; --st2-bg:#331F1C;
+  --st3:#61BC97; --st3-bg:#142C24;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Libre Franklin",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:1500px;margin:0 auto;padding:0 20px 80px}
+
+/* ---- header ---- */
+header.top{
+  position:sticky;top:0;z-index:40;background:var(--surface);
+  border-bottom:1px solid var(--line);
+}
+.top-inner{max-width:1500px;margin:0 auto;padding:14px 20px;display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;gap:2px;margin-right:auto}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:26px;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.savebar{display:flex;align-items:center;gap:10px}
+.pill-status{font-size:12px;color:var(--ink-2);white-space:nowrap}
+.btn{
+  border:1px solid var(--line);background:var(--surface-2);color:var(--ink);
+  border-radius:7px;padding:8px 14px;font-weight:600;font-size:13px;
+  transition:background .15s,border-color .15s,opacity .15s;
+}
+.btn:hover:not(:disabled){background:var(--sunken)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover:not(:disabled){filter:brightness(1.08);background:var(--accent)}
+
+/* ---- ciclo tabs ---- */
+.tabs{display:flex;gap:4px;overflow-x:auto;padding:0 20px;max-width:1500px;margin:0 auto}
+.tab{
+  border:1px solid transparent;border-bottom:none;background:transparent;color:var(--ink-2);
+  padding:9px 16px 10px;border-radius:8px 8px 0 0;font-weight:600;font-size:13px;white-space:nowrap;
+}
+.tab .sub{display:block;font-weight:400;font-size:11px;color:var(--ink-3)}
+.tab[aria-selected="true"]{background:var(--surface);border-color:var(--line);color:var(--ink);margin-bottom:-1px}
+.tabsrow{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:63px;z-index:39}
+
+/* ---- resumen ---- */
+.projtitle{font-family:"Newsreader",Georgia,serif;font-size:19px;margin:22px 0 2px;font-weight:600}
+.projmeta{color:var(--ink-2);font-size:13px;margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+.card .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.card .v{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:4px}
+.card.s1 .v{color:var(--st1)} .card.s2 .v{color:var(--st2)} .card.s3 .v{color:var(--st3)}
+.bar{height:6px;border-radius:99px;background:var(--sunken);overflow:hidden;margin-top:9px}
+.bar > i{display:block;height:100%;background:var(--accent);border-radius:99px}
+
+/* ---- toolbar ---- */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.field{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.field label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.field select{border:none;background:transparent;font-size:13px;font-weight:500;max-width:270px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.lg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2)}
+.chip{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-size:11px;font-weight:700}
+.c0{background:var(--st0-bg);color:var(--st0)} .c1{background:var(--st1-bg);color:var(--st1)}
+.c2{background:var(--st2-bg);color:var(--st2)} .c3{background:var(--st3-bg);color:var(--st3)}
+
+/* ---- tabla ---- */
+.tablebox{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:auto;max-height:70vh}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px}
+th,td{text-align:left;padding:0}
+thead th{
+  position:sticky;top:0;z-index:20;background:var(--surface-2);
+  border-bottom:1px solid var(--line);padding:10px 10px;font-size:12px;font-weight:700;
+  color:var(--ink-2);vertical-align:bottom;
+}
+thead th.eq{text-align:center;min-width:96px}
+thead th.eq .m{display:block;font-weight:400;font-size:11px;color:var(--ink-3);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+thead th.eq .mem{display:block;font-weight:400;font-size:10.5px;color:var(--ink-3);max-width:190px;line-height:1.3;white-space:normal;margin-top:2px}
+thead th.eq .pct{display:block;font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink-3);font-weight:600;margin-top:4px}
+thead th.eq .lnk{display:inline-block;margin-top:4px;font-size:10.5px;font-weight:600;color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor}
+thead th.eq .lnk:hover{opacity:.75}
+th.stub{position:sticky;left:0;z-index:30;min-width:340px;max-width:460px;background:var(--surface-2);border-right:1px solid var(--line)}
+td.stub{position:sticky;left:0;z-index:10;background:var(--surface);border-right:1px solid var(--line);padding:8px 12px}
+tr.caprow td{
+  background:var(--sunken);font-family:"Newsreader",Georgia,serif;font-size:13px;font-weight:600;
+  letter-spacing:.02em;padding:7px 12px;border-bottom:1px solid var(--line);border-top:1px solid var(--line);
+  position:sticky;left:0;
+}
+tbody td{border-bottom:1px solid var(--line-soft)}
+.ptxt{display:block;line-height:1.35}
+.ud{display:inline-block;margin-top:4px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:2px 6px;border-radius:4px}
+.ud .doc{text-transform:none;letter-spacing:0;font-weight:500;opacity:.85}
+td.cell{text-align:center;padding:5px 6px}
+.st{
+  width:100%;min-width:74px;height:32px;border-radius:6px;border:1px solid transparent;
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:600;position:relative;
+}
+.st.s0{background:var(--st0-bg);color:var(--st0)}
+.st.s1{background:var(--st1-bg);color:var(--st1)}
+.st.s2{background:var(--st2-bg);color:var(--st2)}
+.st.s3{background:var(--st3-bg);color:var(--st3)}
+.st:hover{border-color:currentColor}
+.st .note-dot{position:absolute;top:3px;right:4px;width:5px;height:5px;border-radius:50%;background:currentColor}
+tr.dim{opacity:.34}
+
+/* ---- popover ---- */
+.pop{
+  position:fixed;z-index:80;background:var(--surface);border:1px solid var(--line);
+  border-radius:10px;box-shadow:var(--shadow);padding:12px;width:264px;
+}
+.pop h4{margin:0 0 3px;font-size:13px;font-weight:700}
+.pop .who{font-size:11.5px;color:var(--ink-2);margin-bottom:10px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.opt{border:1px solid var(--line);border-radius:6px;padding:7px 6px;font-size:12px;font-weight:600;background:var(--surface-2);text-align:center}
+.opt.on{border-color:currentColor}
+.opt.o0{color:var(--st0)} .opt.o1{color:var(--st1)} .opt.o2{color:var(--st2)} .opt.o3{color:var(--st3)}
+.opt.on.o0{background:var(--st0-bg)} .opt.on.o1{background:var(--st1-bg)}
+.opt.on.o2{background:var(--st2-bg)} .opt.on.o3{background:var(--st3-bg)}
+.pop textarea,.pop input[type="url"]{
+  width:100%;border:1px solid var(--line);border-radius:6px;padding:7px 8px;font-size:12.5px;
+  background:var(--surface-2);resize:vertical;
+}
+.pop textarea{min-height:52px}
+.pop input[type="url"]{margin-bottom:7px}
+.pop .open{display:inline-block;margin-top:7px;font-size:12px;font-weight:600;color:var(--accent)}
+.pop .row{display:flex;gap:6px;margin-top:9px}
+.pop .row .btn{flex:1;padding:6px 8px;font-size:12px}
+
+/* ---- panel gestión ---- */
+details.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-top:18px;overflow:hidden}
+details.panel > summary{padding:12px 16px;font-weight:600;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}
+details.panel > summary::-webkit-details-marker{display:none}
+details.panel > summary::before{content:"+";font-weight:700;color:var(--accent)}
+details.panel[open] > summary::before{content:"–"}
+.panel-body{padding:4px 16px 18px;border-top:1px solid var(--line-soft)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.subh{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin:14px 0 8px}
+.rowin{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rowin .lbl{flex:0 0 44%;font-size:12.5px;color:var(--ink-2)}
+.eqcard{border:1px solid var(--line-soft);border-radius:9px;padding:10px 11px;margin-bottom:10px;background:var(--surface-2)}
+.eqcard .tag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700;display:block;margin:6px 0 5px}
+.rowin input{flex:1;border:1px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--surface-2);font-size:13px;min-width:0}
+.udprog{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.udprog .nm{flex:1;font-size:12.5px}
+.udprog .pc{font-variant-numeric:tabular-nums;font-weight:700;font-size:12.5px;width:42px;text-align:right}
+.udprog .bar{flex:0 0 110px;margin:0}
+.hint{font-size:12px;color:var(--ink-2);margin:10px 0 0}
+.banner{background:var(--st1-bg);color:var(--st1);border:1px solid currentColor;border-radius:8px;padding:9px 13px;font-size:12.5px;font-weight:600;margin:16px 0 0}
+footer.foot{max-width:1500px;margin:26px auto 0;padding:0 20px;color:var(--ink-3);font-size:12px}
+@media (max-width:720px){
+  th.stub{min-width:210px}
+  h1{font-size:21px}
+  .legend{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <span class="eyebrow">Programa de Marketing · Período <span id="periodo"></span></span>
+      <h1>Control de avance de proyectos integradores</h1>
+    </div>
+    <div class="savebar">
+      <span class="pill-status" id="status">Conectando…</span>
+      <button class="btn" id="btnRefresh">Actualizar</button>
+      <button class="btn" id="btnCsv">Descargar CSV</button>
+    </div>
+  </div>
+  <div class="tabsrow"><div class="tabs" id="tabs" role="tablist"></div></div>
+</header>
+
+<div class="wrap"><div id="app"></div></div>
+<footer class="foot" id="foot"></footer>
+
+<script id="estructura" type="application/json">{"periodo":"2026-II","ciclos":[{"id":"mkt1","nombre":"MKT 1","ciclo":"I Ciclo","titulo":"Análisis integral de un producto arequipeño","estudiantes":["Briceño Cjuro Yasmin", "Ccoyllulli Conza Estefani", "Iquiapaza Cutipa Eymi Angeles", "Pacsi Ibañez Ruth Vanessa", "Salas Trelles Nicole Naomi", "Torres Benegas Daniela Fiorela"],"unidades":[{"id":"FM","nombre":"Fundamentos de Marketing"},{"id":"ARE","nombre":"Análisis de la Realidad Económica"},{"id":"MA","nombre":"Matemática Aplicada"},{"id":"CC","nombre":"Comportamiento del Consumidor"},{"id":"TC","nombre":"Trabajo Colaborativo"},{"id":"CE","nombre":"Comunicación Efectiva"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"CE"},{"id":"p1","cap":"Preliminares","t":"Presentación del equipo y distribución de roles","ud":"TC"},{"id":"p2","cap":"Capítulo 1 · Marco teórico","t":"1.1 Antecedentes de la marca, empresa o producto","ud":"FM"},{"id":"p3","cap":"Capítulo 1 · Marco teórico","t":"1.2 Desarrollo monográfico de conceptos económicos (PBI, IPC, inflación)","ud":"ARE"},{"id":"p4","cap":"Capítulo 1 · Marco teórico","t":"1.2.5 Diagnóstico socioeconómico de la región Arequipa","ud":"ARE"},{"id":"p5","cap":"Capítulo 2 · Análisis de la información","t":"2.1 Método de investigación y elaboración del instrumento","ud":"CC"},{"id":"p6","cap":"Capítulo 2 · Análisis de la información","t":"2.2 Determinación del público objetivo y factores del consumidor","ud":"CC"},{"id":"p7","cap":"Capítulo 2 · Análisis de la información","t":"2.3 Propuesta de valor y posicionamiento buscado","ud":"FM"},{"id":"p8","cap":"Capítulo 2 · Análisis de la información","t":"2.4 Producto: tipos y ciclo de vida","ud":"FM"},{"id":"p9","cap":"Capítulo 2 · Análisis de la información","t":"2.5 Precio: análisis de precios y estado de resultados","ud":"FM"},{"id":"p10","cap":"Capítulo 2 · Análisis de la información","t":"2.5.3 Cálculo de márgenes de utilidad (bruta, neta y operativa)","ud":"MA"},{"id":"p11","cap":"Capítulo 2 · Análisis de la información","t":"2.6 Distribución (Plaza) y canales","ud":"FM"},{"id":"p12","cap":"Capítulo 2 · Análisis de la información","t":"2.7 Comunicación (Promoción)","ud":"FM"},{"id":"p13","cap":"Capítulo 3 · Propuesta de campaña","t":"3.1 Diseño de la estrategia de campaña, insight y canales","ud":"FM"},{"id":"p14","cap":"Capítulo 3 · Propuesta de campaña","t":"3.1.2 Análisis de insights del consumidor","ud":"CC"},{"id":"p15","cap":"Capítulo 3 · Propuesta de campaña","t":"3.2 Proyecciones, flujo de caja e indicadores de rentabilidad","ud":"MA"},{"id":"p16","cap":"Cierre","t":"Conclusiones y recomendaciones","ud":"CE"},{"id":"p17","cap":"Cierre","t":"Bibliografía y referencias en formato APA 7.ª ed.","ud":"CE"},{"id":"p18","cap":"Anexos","t":"A.1 Instrumento aplicado y tabulación de resultados","ud":"CC"},{"id":"p19","cap":"Anexos","t":"A.2 Tablas y evidencia de los cálculos financieros","ud":"MA"},{"id":"p20","cap":"Anexos","t":"A.3 Acta de conformación del equipo y registro de avances","ud":"TC"},{"id":"p21","cap":"Sustentación","t":"Presentación visual y sustentación oral (15 minutos)","ud":"CE"}]},{"id":"mkt2","nombre":"MKT 2","ciclo":"II Ciclo","titulo":"Innovación de producto con enfoque sostenible","estudiantes":["Ccacyavilca Chara Nelida", "Chayña Pérez Prudencio Américo", "Diaz Quilla Corayma Anyelina", "Huamani Quispe Diana", "Paredes Rondón Valeria De Los Ángeles", "Pinto Mendoza Rodrigo"],"unidades":[{"id":"CRE","nombre":"Creatividad Comercial"},{"id":"ICT","nombre":"Investigación Cuantitativa"},{"id":"ICL","nombre":"Investigación Cualitativa"},{"id":"EST","nombre":"Estadística Aplicada"},{"id":"SP","nombre":"Solución de Problemas"},{"id":"CA","nombre":"Cultura Ambiental"},{"id":"GEN","nombre":"General / Coordinación"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"p1","cap":"Capítulo 1 · Marco teórico","t":"1.1 Selección y justificación del tema a desarrollar","ud":"CRE"},{"id":"p2","cap":"Capítulo 1 · Marco teórico","t":"1.2 Antecedentes del producto o servicio","ud":"CRE"},{"id":"p3","cap":"Capítulo 1 · Marco teórico","t":"1.3.1 Sostenibilidad, conciencia ambiental y servicios ecosistémicos","ud":"CA"},{"id":"p4","cap":"Capítulo 1 · Marco teórico","t":"1.3.2 Normativa ambiental peruana, ISO 14001 y EMAS","ud":"CA"},{"id":"p5","cap":"Capítulo 1 · Marco teórico","t":"1.3.3 Fundamentos de identificación y solución de problemas","ud":"SP"},{"id":"p6","cap":"Capítulo 2 · Análisis de la información","t":"2.1 Problemática comercial: FODA, Ishikawa y 5 porqués","ud":"SP"},{"id":"p7","cap":"Capítulo 2 · Análisis de la información","t":"2.2.1 Planteamiento del problema, variables e hipótesis","ud":"ICT"},{"id":"p8","cap":"Capítulo 2 · Análisis de la información","t":"2.2.2 Técnicas de muestreo y tamaño de la muestra","ud":"ICT"},{"id":"p9","cap":"Capítulo 2 · Análisis de la información","t":"2.2.3 Diseño de instrumentos cuantitativos y escala de Likert","ud":"ICT"},{"id":"p10","cap":"Capítulo 2 · Análisis de la información","t":"2.2.4 Diseño de instrumentos cualitativos: entrevistas y focus group","ud":"ICL"},{"id":"p11","cap":"Capítulo 2 · Análisis de la información","t":"2.3.1 Procesamiento de datos en Excel o SPSS","ud":"EST"},{"id":"p12","cap":"Capítulo 2 · Análisis de la información","t":"2.3.2 Estadística descriptiva: tendencia central y dispersión","ud":"EST"},{"id":"p13","cap":"Capítulo 2 · Análisis de la información","t":"2.3.3 Gráficos, intervalos de confianza y pruebas de hipótesis","ud":"EST"},{"id":"p14","cap":"Capítulo 2 · Análisis de la información","t":"2.3.4 Sistematización de hallazgos cualitativos e insights","ud":"ICL"},{"id":"p15","cap":"Capítulo 2 · Análisis de la información","t":"2.4 Determinación del público objetivo","ud":"ICT"},{"id":"p16","cap":"Capítulo 2 · Análisis de la información","t":"2.5 Propuesta de valor, imagen y posicionamiento actual","ud":"CRE"},{"id":"p17","cap":"Capítulo 2 · Análisis de la información","t":"2.6.1 Estudio del producto: percepción, uso y satisfacción","ud":"ICT"},{"id":"p18","cap":"Capítulo 2 · Análisis de la información","t":"2.6.2 Evaluación del impacto ambiental del producto actual","ud":"CA"},{"id":"p19","cap":"Capítulo 3 · Propuesta de innovación","t":"3.1 Estrategia innovadora: Design Thinking, Lean Startup y storytelling","ud":"CRE"},{"id":"p20","cap":"Capítulo 3 · Propuesta de innovación","t":"3.2 Acciones eco-eficientes integradas a la propuesta","ud":"CA"},{"id":"p21","cap":"Capítulo 3 · Propuesta de innovación","t":"3.3 Viabilidad: matriz de priorización, costo-beneficio y KPI","ud":"SP"},{"id":"p22","cap":"Cierre","t":"Conclusiones, recomendaciones y bibliografía APA 7.ª ed.","ud":"GEN"},{"id":"p23","cap":"Anexos","t":"A.1 Prototipo del producto y evidencias del prototipado","ud":"CRE"},{"id":"p24","cap":"Anexos","t":"A.2 Instrumentos de recolección de datos aplicados","ud":"ICL"},{"id":"p25","cap":"Anexos","t":"A.3 Bases de datos y reportes de salida del software estadístico","ud":"EST"},{"id":"p26","cap":"Sustentación","t":"Presentación ejecutiva y defensa oral (20 minutos)","ud":"GEN"}]},{"id":"mkt3","nombre":"MKT 3","ciclo":"III Ciclo","titulo":"Propuesta de un nuevo producto o servicio y evaluación de su rentabilidad","estudiantes":["Aguirre Zegarra Antonio Steven", "Apaza Jiménez Héctor Miguel", "Huamanga Supa Flor Thalia", "Mamani Mamani Yamilet Tania", "Paredes Sangama Gabriel Tonny", "Quiroga Castelo Josue Alexander"],"unidades":[{"id":"EP","nombre":"Estrategia de Producto"},{"id":"MS","nombre":"Marketing de Servicios"},{"id":"CRM","nombre":"Marketing Relacional y CRM"},{"id":"ACP","nombre":"Análisis de Costos y Presupuestos"},{"id":"ETI","nombre":"Ética y Ciudadanía"},{"id":"IG","nombre":"Igualdad de Género"},{"id":"GEN","nombre":"General / Coordinación"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"p1","cap":"Capítulo 1 · Oportunidad comercial","t":"1.1 Presentación de la empresa y de su portafolio actual","ud":"EP"},{"id":"p2","cap":"Capítulo 1 · Oportunidad comercial","t":"1.2 Diagnóstico del portafolio mediante la Matriz BCG","ud":"EP"},{"id":"p3","cap":"Capítulo 1 · Oportunidad comercial","t":"1.3 Ciclo de vida y detección del vacío de portafolio","ud":"EP"},{"id":"p4","cap":"Capítulo 1 · Oportunidad comercial","t":"1.4 Definición de la oportunidad y justificación de la propuesta","ud":"EP"},{"id":"p5","cap":"Capítulo 2 · Diseño de la propuesta","t":"2.1 Concepto, niveles y atributos del nuevo producto o servicio","ud":"EP"},{"id":"p6","cap":"Capítulo 2 · Diseño de la propuesta","t":"2.2 Público objetivo y propuesta de valor","ud":"EP"},{"id":"p7","cap":"Capítulo 2 · Diseño de la propuesta","t":"2.3 Diferenciación y posicionamiento buscado","ud":"EP"},{"id":"p8","cap":"Capítulo 2 · Diseño de la propuesta","t":"2.4 Empaque, identidad visual y narrativa de marca","ud":"EP"},{"id":"p9","cap":"Capítulo 2 · Diseño de la propuesta","t":"2.5 Estrategia de lanzamiento dentro del portafolio","ud":"EP"},{"id":"p10","cap":"Capítulo 3 · Modelo de entrega","t":"3.1 Características del servicio propuesto","ud":"MS"},{"id":"p11","cap":"Capítulo 3 · Modelo de entrega","t":"3.2 Mezcla de marketing ampliada (7P)","ud":"MS"},{"id":"p12","cap":"Capítulo 3 · Modelo de entrega","t":"3.3 Blueprint del servicio y línea de visibilidad","ud":"MS"},{"id":"p13","cap":"Capítulo 3 · Modelo de entrega","t":"3.4 Estándares de calidad medibles y protocolos de atención","ud":"MS"},{"id":"p14","cap":"Capítulo 3 · Modelo de entrega","t":"3.5 Perfil y organización del equipo humano (Personas)","ud":"MS"},{"id":"p15","cap":"Capítulo 3 · Modelo de entrega","t":"3.6 Gestión de reclamos y plan de recuperación del servicio","ud":"MS"},{"id":"p16","cap":"Capítulo 4 · Estrategia relacional","t":"4.1 Diagnóstico de la gestión relacional actual","ud":"CRM"},{"id":"p17","cap":"Capítulo 4 · Estrategia relacional","t":"4.2 Customer Journey proyectado","ud":"CRM"},{"id":"p18","cap":"Capítulo 4 · Estrategia relacional","t":"4.3 Estimación del Valor del Cliente a Largo Plazo (CLV)","ud":"CRM"},{"id":"p19","cap":"Capítulo 4 · Estrategia relacional","t":"4.4 Programa de fidelización y tácticas de retención","ud":"CRM"},{"id":"p20","cap":"Capítulo 4 · Estrategia relacional","t":"4.5 Herramientas de CRM e indicadores de seguimiento","ud":"CRM"},{"id":"p21","cap":"Capítulo 5 · Costos y rentabilidad","t":"5.1 Clasificación de los costos de la propuesta","ud":"ACP"},{"id":"p22","cap":"Capítulo 5 · Costos y rentabilidad","t":"5.2 Determinación del costo unitario","ud":"ACP"},{"id":"p23","cap":"Capítulo 5 · Costos y rentabilidad","t":"5.3 Precio de venta y margen de contribución","ud":"ACP"},{"id":"p24","cap":"Capítulo 5 · Costos y rentabilidad","t":"5.4 Punto de equilibrio en unidades y en soles, con su gráfico","ud":"ACP"},{"id":"p25","cap":"Capítulo 5 · Costos y rentabilidad","t":"5.5 Presupuesto de inversión inicial y presupuesto operativo","ud":"ACP"},{"id":"p26","cap":"Capítulo 5 · Costos y rentabilidad","t":"5.6 Proyección de ventas y estado de resultados del primer año","ud":"ACP"},{"id":"p27","cap":"Capítulo 5 · Costos y rentabilidad","t":"5.7 Análisis de escenarios y sensibilidad","ud":"ACP"},{"id":"p28","cap":"Capítulo 5 · Costos y rentabilidad","t":"5.8 Índice costo-beneficio, recuperación y conclusión de viabilidad","ud":"ACP"},{"id":"p29","cap":"Capítulo 6 · Ética y RSE","t":"6.1 y 6.2 Dilemas éticos y veracidad de las promesas de producto","ud":"ETI"},{"id":"p30","cap":"Capítulo 6 · Ética y RSE","t":"6.3 y 6.4 Impacto en la comunidad, RSE y código de conducta","ud":"ETI"},{"id":"p31","cap":"Capítulo 7 · Igualdad de género","t":"7.1 y 7.2 Representación de género y comunicación inclusiva","ud":"IG"},{"id":"p32","cap":"Capítulo 7 · Igualdad de género","t":"7.3 y 7.4 Políticas de igualdad y prevención del hostigamiento","ud":"IG"},{"id":"p33","cap":"Cierre","t":"Conclusiones, recomendaciones y bibliografía APA 7.ª ed.","ud":"GEN"},{"id":"p34","cap":"Anexos","t":"A.1 Ficha técnica y evidencias gráficas de empaque","ud":"EP"},{"id":"p35","cap":"Anexos","t":"A.2 Blueprint del servicio y flujogramas de atención","ud":"MS"},{"id":"p36","cap":"Anexos","t":"A.3 Customer Journey proyectado y cálculo del CLV","ud":"CRM"},{"id":"p37","cap":"Anexos","t":"A.4 Modelo financiero en Excel con fórmulas activas","ud":"ACP"},{"id":"p38","cap":"Anexos","t":"A.5 Código de conducta y análisis ético de la publicidad","ud":"ETI"},{"id":"p39","cap":"Anexos","t":"A.6 Lineamientos de comunicación inclusiva y políticas de equidad","ud":"IG"},{"id":"p40","cap":"Sustentación","t":"Presentación ejecutiva y defensa oral (20 minutos)","ud":"GEN"}]},{"id":"mkt4","nombre":"MKT 4","ciclo":"IV Ciclo","titulo":"Plan estratégico de marca y experiencia del cliente en el entorno digital","estudiantes":["Huamani Vargas Sara Andrea", "Lopez Valiente Keren Sabrina", "Torres Benegas Nicolle Lucia"],"unidades":[{"id":"ME","nombre":"Marketing Estratégico"},{"id":"GM","nombre":"Gestión de Marca"},{"id":"CEM","nombre":"Customer Experience Management"},{"id":"ECD","nombre":"Entorno Comercial Digital"},{"id":"EMP","nombre":"Emprendimiento"},{"id":"LID","nombre":"Liderazgo Personal y Profesional"},{"id":"GEN","nombre":"General / Coordinación"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"p1","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.1 Presentación de la organización, misión, visión y UEN","ud":"ME"},{"id":"p2","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.2 Análisis del macroentorno (PESTEL) y tendencias","ud":"ME"},{"id":"p3","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.3 Cinco Fuerzas de Porter y mapa competitivo","ud":"ME"},{"id":"p4","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.4 Matriz FODA, Matriz EFI y Matriz EFE","ud":"ME"},{"id":"p5","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.5 Segmentación, mercado meta y Buyer Persona","ud":"ME"},{"id":"p6","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.6 Estrategias competitivas (Porter y Matriz Ansoff)","ud":"ME"},{"id":"p7","cap":"Capítulo 2 · Plataforma de marca","t":"2.1 Auditoría de marca: identidad, imagen, reputación y personalidad","ud":"GM"},{"id":"p8","cap":"Capítulo 2 · Plataforma de marca","t":"2.2 Mapa de posicionamiento y diferenciación competitiva","ud":"GM"},{"id":"p9","cap":"Capítulo 2 · Plataforma de marca","t":"2.3 Plataforma de marca: Brand Key, Brand Essence y promesa","ud":"GM"},{"id":"p10","cap":"Capítulo 2 · Plataforma de marca","t":"2.4 Identidad visual y verbal: naming y tono de comunicación","ud":"GM"},{"id":"p11","cap":"Capítulo 2 · Plataforma de marca","t":"2.5 Arquitectura de marca, extensiones y branding digital","ud":"GM"},{"id":"p12","cap":"Capítulo 2 · Plataforma de marca","t":"2.6 Medición del Brand Equity (modelos de Aaker y Keller)","ud":"GM"},{"id":"p13","cap":"Capítulo 3 · Experiencia del cliente","t":"3.1 Comportamiento del consumidor y segmentación por experiencias","ud":"CEM"},{"id":"p14","cap":"Capítulo 3 · Experiencia del cliente","t":"3.2 Customer Journey Map: touchpoints y momentos de verdad","ud":"CEM"},{"id":"p15","cap":"Capítulo 3 · Experiencia del cliente","t":"3.3 Identificación de brechas en la experiencia actual","ud":"CEM"},{"id":"p16","cap":"Capítulo 3 · Experiencia del cliente","t":"3.4 Calidad del servicio (SERVQUAL / SERVPERF) y reclamos","ud":"CEM"},{"id":"p17","cap":"Capítulo 3 · Experiencia del cliente","t":"3.5 Estrategia de fidelización y experiencia omnicanal","ud":"CEM"},{"id":"p18","cap":"Capítulo 3 · Experiencia del cliente","t":"3.6 Indicadores de experiencia: NPS, CSAT, CES y CLV","ud":"CEM"},{"id":"p19","cap":"Capítulo 4 · Comercialización digital","t":"4.1 Diagnóstico del ecosistema comercial digital","ud":"ECD"},{"id":"p20","cap":"Capítulo 4 · Comercialización digital","t":"4.2 Evaluación del modelo de negocio digital","ud":"ECD"},{"id":"p21","cap":"Capítulo 4 · Comercialización digital","t":"4.3 Canales digitales y estrategia de presencia online","ud":"ECD"},{"id":"p22","cap":"Capítulo 4 · Comercialización digital","t":"4.4 Embudo de conversión, medios de pago y última milla","ud":"ECD"},{"id":"p23","cap":"Capítulo 4 · Comercialización digital","t":"4.5 Herramientas tecnológicas: CRM, automatización y chatbots","ud":"ECD"},{"id":"p24","cap":"Capítulo 4 · Comercialización digital","t":"4.6 Indicadores digitales: conversión, ticket promedio, CAC, ROI y LTV","ud":"ECD"},{"id":"p25","cap":"Capítulo 5 · Modelo de negocio","t":"5.1 Construcción del Business Model Canvas","ud":"EMP"},{"id":"p26","cap":"Capítulo 5 · Modelo de negocio","t":"5.2 Portafolio de productos o servicios y propuesta de valor","ud":"EMP"},{"id":"p27","cap":"Capítulo 5 · Modelo de negocio","t":"5.3 Estructura de costos y fijación de precios","ud":"EMP"},{"id":"p28","cap":"Capítulo 5 · Modelo de negocio","t":"5.4 Proyección de resultados y sostenibilidad económica","ud":"EMP"},{"id":"p29","cap":"Capítulo 6 · Implementación y control","t":"6.1 Plan de acción, cronograma, presupuesto y recursos","ud":"ME"},{"id":"p30","cap":"Capítulo 6 · Implementación y control","t":"6.2 Sistema de control: KPI y Balanced Scorecard de marketing","ud":"ME"},{"id":"p31","cap":"Capítulo 6 · Implementación y control","t":"6.3 Organización del equipo: roles, metas SMART y colaboración","ud":"LID"},{"id":"p32","cap":"Capítulo 6 · Implementación y control","t":"6.4 Liderazgo responsable: enfoque ético, social y ambiental","ud":"LID"},{"id":"p33","cap":"Cierre","t":"Conclusiones, recomendaciones y bibliografía APA 7.ª ed.","ud":"GEN"},{"id":"p34","cap":"Anexos","t":"A.1 Customer Journey Map e instrumentos de medición","ud":"CEM"},{"id":"p35","cap":"Anexos","t":"A.2 Manual de marca y evidencias de identidad visual","ud":"GM"},{"id":"p36","cap":"Anexos","t":"A.3 Hojas de cálculo de costeo, precios y proyección","ud":"EMP"},{"id":"p37","cap":"Anexos","t":"A.4 Evidencias de presencia digital y reportes de indicadores","ud":"ECD"},{"id":"p38","cap":"Anexos","t":"A.5 Acta de distribución de roles y reflexión crítica del equipo","ud":"LID"},{"id":"p39","cap":"Sustentación","t":"Presentación ejecutiva y defensa oral (25 minutos)","ud":"GEN"}]}]}</script>
+<script>
+(function(){
+"use strict";
+var SB_URL = "https://yckucfrsflacgbsihxdb.supabase.co";
+var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlja3VjZnJzZmxhY2dic2loeGRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5MDczMTgsImV4cCI6MjEwMDQ4MzMxOH0.jLsoqNujIbxes4UrRaH0Q1SNDpO_4UiImDq6aSRYLfo";
+var EST = ["Pendiente","En proceso","Observado","Aprobado"];
+var GLY = ["—","◐","!","✓"];
+var E = JSON.parse(document.getElementById("estructura").textContent);
+var view = { ciclo: E.ciclos[0].id, ud: "", eq: "" };
+var DATA = { grupos: {}, docentes: {}, avance: {} };
+var cargado = false, pendientes = 0, ultimoError = "";
+
+try { var v = localStorage.getItem("ctrl-view"); if (v){ var pv = JSON.parse(v); if (pv && pv.ciclo) view = pv; } } catch(e){}
+
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function cic(){ for (var i=0;i<E.ciclos.length;i++) if (E.ciclos[i].id===view.ciclo) return E.ciclos[i]; return E.ciclos[0]; }
+function grupos(cid){ return DATA.grupos[cid] || []; }
+function docenteDe(cid,uid){ return DATA.docentes[cid+"|"+uid] || ""; }
+function cellOf(cid,pid,gid){ var x = DATA.avance[cid+"|"+pid+"|"+gid]; return x ? {e:x.e||0,n:x.n||"",l:x.l||""} : {e:0,n:"",l:""}; }
+function pct(n,d){ return d ? Math.round(n*100/d) : 0; }
+
+/* -------- Supabase -------- */
+function api(path, opts){
+  opts = opts || {};
+  var h = { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" };
+  if (opts.prefer) h["Prefer"] = opts.prefer;
+  return fetch(SB_URL + "/rest/v1/" + path, { method: opts.method || "GET", headers: h, body: opts.body ? JSON.stringify(opts.body) : undefined })
+    .then(function(r){
+      if (!r.ok) return r.text().then(function(t){ throw new Error(r.status + " " + t); });
+      var ct = r.headers.get("content-type") || "";
+      return ct.indexOf("json") >= 0 ? r.json() : null;
+    });
+}
+function setStatus(t){ var el = document.getElementById("status"); if (el) el.textContent = t; }
+function marcarGuardando(){ pendientes++; setStatus("Guardando…"); }
+function marcarListo(err){
+  pendientes = Math.max(0, pendientes - 1);
+  if (err){ ultimoError = String(err); setStatus("No se pudo guardar. Revisa la conexión."); return; }
+  if (pendientes === 0) setStatus("Guardado " + hora());
+}
+function hora(){
+  try { return new Date().toLocaleTimeString("es-PE", {hour:"2-digit", minute:"2-digit"}); }
+  catch(e){ return ""; }
+}
+
+function cargar(silencioso){
+  if (!silencioso) setStatus("Cargando…");
+  return Promise.all([
+    api("mkt_grupo?select=*&order=ciclo,orden"),
+    api("mkt_docente?select=*"),
+    api("mkt_avance?select=*")
+  ]).then(function(res){
+    DATA.grupos = {}; DATA.docentes = {}; DATA.avance = {};
+    res[0].forEach(function(g){
+      if (!DATA.grupos[g.ciclo]) DATA.grupos[g.ciclo] = [];
+      DATA.grupos[g.ciclo].push({ id:g.id, orden:g.orden, nombre:g.nombre, marca:g.marca, link:g.link,
+        int:[g.integrante1||"", g.integrante2||"", g.integrante3||""] });
+    });
+    res[1].forEach(function(d){ DATA.docentes[d.ciclo+"|"+d.unidad] = d.docente || ""; });
+    res[2].forEach(function(a){ DATA.avance[a.ciclo+"|"+a.punto+"|"+a.grupo_id] = {e:a.estado, n:a.nota||"", l:a.link||""}; });
+    cargado = true;
+    render();
+    setStatus("Actualizado " + hora());
+  }).catch(function(err){
+    cargado = false;
+    setStatus("Sin conexión con la base de datos.");
+    ultimoError = String(err);
+    render();
+  });
+}
+
+function guardarAvance(cid, pid, gid, cell){
+  marcarGuardando();
+  api("mkt_avance", { method:"POST", prefer:"resolution=merge-duplicates,return=minimal",
+    body:[{ ciclo:cid, punto:pid, grupo_id:gid, estado:cell.e, nota:cell.n, link:cell.l, actualizado_en:new Date().toISOString() }] })
+    .then(function(){ marcarListo(); }).catch(marcarListo);
+}
+function guardarGrupo(gid, campos){
+  marcarGuardando();
+  api("mkt_grupo?id=eq." + encodeURIComponent(gid), { method:"PATCH", prefer:"return=minimal", body:campos })
+    .then(function(){ marcarListo(); }).catch(marcarListo);
+}
+function guardarDocente(cid, uid, nombre){
+  marcarGuardando();
+  api("mkt_docente", { method:"POST", prefer:"resolution=merge-duplicates,return=minimal",
+    body:[{ ciclo:cid, unidad:uid, docente:nombre }] })
+    .then(function(){ marcarListo(); }).catch(marcarListo);
+}
+
+/* Estudiantes del ciclo que aún no están en ningún grupo */
+function opcionesEst(c){
+  var usados = {}, gs = grupos(c.id), h = "";
+  for (var i=0;i<gs.length;i++) for (var k=0;k<3;k++){ var x = (gs[i].int[k]||"").trim(); if (x) usados[x] = 1; }
+  var lista = c.estudiantes || [];
+  for (var j=0;j<lista.length;j++) if (!usados[lista[j]]) h += '<option value="'+esc(lista[j])+'"></option>';
+  return h;
+}
+
+/* -------- render -------- */
+function tallyCiclo(c){
+  var t=[0,0,0,0], total=0, gs=grupos(c.id);
+  for (var i=0;i<c.puntos.length;i++) for (var j=0;j<gs.length;j++){ t[cellOf(c.id,c.puntos[i].id,gs[j].id).e]++; total++; }
+  return {t:t,total:total};
+}
+function tallyGrupo(c,gid){
+  var ok=0; for (var i=0;i<c.puntos.length;i++) if (cellOf(c.id,c.puntos[i].id,gid).e===3) ok++;
+  return pct(ok,c.puntos.length);
+}
+function tallyUD(c,uid){
+  var ok=0,n=0,gs=grupos(c.id);
+  for (var i=0;i<c.puntos.length;i++){ if (c.puntos[i].ud!==uid) continue;
+    for (var j=0;j<gs.length;j++){ n++; if (cellOf(c.id,c.puntos[i].id,gs[j].id).e===3) ok++; } }
+  return pct(ok,n);
+}
+function renderTabs(){
+  var h="";
+  for (var i=0;i<E.ciclos.length;i++){
+    var c=E.ciclos[i];
+    h += '<button class="tab" role="tab" data-ciclo="'+c.id+'" aria-selected="'+(c.id===view.ciclo)+'">'+
+         esc(c.nombre)+'<span class="sub">'+esc(c.ciclo)+'</span></button>';
+  }
+  document.getElementById("tabs").innerHTML = h;
+}
+
+function render(){
+  var c = cic(), h = "";
+  document.getElementById("periodo").textContent = E.periodo;
+  renderTabs();
+
+  if (!cargado){
+    document.getElementById("app").innerHTML =
+      '<p class="banner">No se pudo conectar con la base de datos. Revisa tu conexión a internet y pulsa Actualizar.'+
+      (ultimoError ? '<br><span style="font-weight:400">'+esc(ultimoError.slice(0,180))+'</span>' : '')+'</p>';
+    return;
+  }
+
+  var gs = grupos(c.id), tl = tallyCiclo(c);
+  h += '<p class="projtitle">'+esc(c.titulo)+'</p>';
+  h += '<p class="projmeta">'+c.puntos.length+' puntos evaluables · '+gs.length+' grupos · '+c.unidades.length+' unidades didácticas</p>';
+
+  h += '<div class="cards">';
+  h += '<div class="card"><span class="k">Avance general</span><div class="v">'+pct(tl.t[3],tl.total)+'%</div><div class="bar"><i style="width:'+pct(tl.t[3],tl.total)+'%"></i></div></div>';
+  h += '<div class="card s3"><span class="k">Aprobados</span><div class="v">'+tl.t[3]+'</div></div>';
+  h += '<div class="card s1"><span class="k">En proceso</span><div class="v">'+tl.t[1]+'</div></div>';
+  h += '<div class="card s2"><span class="k">Observados</span><div class="v">'+tl.t[2]+'</div></div>';
+  h += '<div class="card"><span class="k">Pendientes</span><div class="v">'+tl.t[0]+'</div></div>';
+  h += '</div>';
+
+  h += '<div class="toolbar">';
+  h += '<div class="field"><label for="fud">Unidad didáctica</label><select id="fud"><option value="">Todas</option>';
+  for (var i=0;i<c.unidades.length;i++){ var u=c.unidades[i], dn=docenteDe(c.id,u.id);
+    h += '<option value="'+esc(u.id)+'"'+(view.ud===u.id?" selected":"")+'>'+esc(u.nombre)+(dn?" — "+esc(dn):"")+'</option>'; }
+  h += '</select></div>';
+  h += '<div class="field"><label for="feq">Grupo</label><select id="feq"><option value="">Todos</option>';
+  for (var j=0;j<gs.length;j++) h += '<option value="'+esc(gs[j].id)+'"'+(view.eq===gs[j].id?" selected":"")+'>'+esc(gs[j].nombre)+'</option>';
+  h += '</select></div>';
+  h += '<div class="legend">';
+  for (var k=0;k<4;k++) h += '<span class="lg"><span class="chip c'+k+'">'+GLY[k]+'</span>'+EST[k]+'</span>';
+  h += '</div></div>';
+
+  var vis = gs.filter(function(g){ return !view.eq || g.id===view.eq; });
+
+  h += '<div class="tablebox"><table><thead><tr><th class="stub">Punto del informe</th>';
+  for (var m=0;m<vis.length;m++){
+    var mem = (vis[m].int||[]).filter(function(x){ return x && x.trim(); });
+    h += '<th class="eq">'+esc(vis[m].nombre)+
+         (vis[m].marca?'<span class="m">'+esc(vis[m].marca)+'</span>':'<span class="m">—</span>')+
+         (mem.length?'<span class="mem">'+esc(mem.join(" · "))+'</span>':'<span class="mem">Sin integrantes</span>')+
+         (vis[m].link?'<a class="lnk" href="'+esc(vis[m].link)+'" target="_blank" rel="noopener">Abrir archivo</a>':'')+
+         '<span class="pct">'+tallyGrupo(c,vis[m].id)+'%</span></th>';
+  }
+  h += '</tr></thead><tbody>';
+
+  if (!vis.length) h += '<tr><td class="stub" colspan="1">Todavía no hay grupos en este ciclo.</td></tr>';
+
+  var lastCap = null;
+  for (var p=0;p<c.puntos.length;p++){
+    var pt = c.puntos[p];
+    if (pt.cap !== lastCap){ lastCap = pt.cap; h += '<tr class="caprow"><td colspan="'+(vis.length+1)+'">'+esc(pt.cap)+'</td></tr>'; }
+    var un = null; for (var z=0;z<c.unidades.length;z++) if (c.unidades[z].id===pt.ud) un=c.unidades[z];
+    var dn2 = docenteDe(c.id, pt.ud);
+    var dim = view.ud && pt.ud !== view.ud;
+    h += '<tr'+(dim?' class="dim"':'')+'><td class="stub"><span class="ptxt">'+esc(pt.t)+'</span>'+
+         '<span class="ud">'+esc(un?un.nombre:pt.ud)+(dn2?' <span class="doc">· '+esc(dn2)+'</span>':'')+'</span></td>';
+    for (var q=0;q<vis.length;q++){
+      var cl = cellOf(c.id, pt.id, vis[q].id);
+      h += '<td class="cell"><button class="st s'+cl.e+'" data-p="'+esc(pt.id)+'" data-g="'+esc(vis[q].id)+'" title="'+esc(cl.n||EST[cl.e])+'">'+
+           GLY[cl.e]+' '+EST[cl.e]+((cl.n||cl.l)?'<span class="note-dot"></span>':'')+'</button></td>';
+    }
+    h += '</tr>';
+  }
+  h += '</tbody></table></div>';
+
+  h += '<details class="panel"><summary>Docentes, grupos, integrantes y avance por unidad didáctica</summary><div class="panel-body"><div class="grid2">';
+  h += '<div><p class="subh">Docente responsable</p>';
+  for (var a=0;a<c.unidades.length;a++){
+    h += '<div class="rowin"><span class="lbl">'+esc(c.unidades[a].nombre)+'</span>'+
+         '<input type="text" data-kind="doc" data-id="'+esc(c.unidades[a].id)+'" value="'+esc(docenteDe(c.id,c.unidades[a].id))+'" placeholder="Nombre del docente"></div>';
+  }
+  h += '<p class="subh">Avance por unidad didáctica</p>';
+  for (var b2=0;b2<c.unidades.length;b2++){
+    var tu = tallyUD(c, c.unidades[b2].id);
+    h += '<div class="udprog"><span class="nm">'+esc(c.unidades[b2].nombre)+'</span>'+
+         '<span class="bar"><i style="width:'+tu+'%"></i></span><span class="pc">'+tu+'%</span></div>';
+  }
+  h += '</div><div><p class="subh">Grupos, marca e integrantes</p>';
+  for (var d=0;d<gs.length;d++){
+    var g = gs[d], ints = g.int || ["","",""];
+    h += '<div class="eqcard">';
+    h += '<div class="rowin"><input type="text" data-kind="gn" data-id="'+esc(g.id)+'" value="'+esc(g.nombre)+'" placeholder="Nombre del grupo">'+
+         '<input type="text" data-kind="gm" data-id="'+esc(g.id)+'" value="'+esc(g.marca)+'" placeholder="Marca o producto"></div>';
+    h += '<div class="rowin"><input type="url" data-kind="gl" data-id="'+esc(g.id)+'" value="'+esc(g.link||"")+'" placeholder="Enlace del archivo del proyecto (Drive, OneDrive…)"></div>';
+    h += '<span class="tag">Integrantes (máximo 3)</span>';
+    for (var w=0;w<3;w++) h += '<div class="rowin"><input type="text" list="lista-est" autocomplete="off" data-kind="gi'+w+'" data-id="'+esc(g.id)+'" value="'+esc(ints[w]||"")+'" placeholder="Integrante '+(w+1)+' (elige de la lista)"></div>';
+    h += '</div>';
+  }
+  h += '<datalist id="lista-est">'+opcionesEst(c)+'</datalist>';
+  h += '<div class="rowin"><button class="btn" id="addG">Añadir grupo</button><button class="btn" id="delG">Quitar el último</button></div>';
+  h += '<p class="hint">Todo se guarda automáticamente en la base de datos; no hay botón de guardar.</p>';
+  h += '</div></div></div></details>';
+
+  document.getElementById("app").innerHTML = h;
+  document.getElementById("foot").textContent =
+    "Cada docente marca únicamente los puntos de su unidad didáctica. Usa el filtro de unidad didáctica para ver solo los tuyos.";
+}
+
+/* -------- interacción -------- */
+var pop = null;
+function closePop(){ if (pop){ pop.remove(); pop = null; } }
+
+function openPop(btn){
+  closePop();
+  var c = cic(), pid = btn.getAttribute("data-p"), gid = btn.getAttribute("data-g");
+  var cell = cellOf(c.id, pid, gid);
+  var pt = null; for (var i=0;i<c.puntos.length;i++) if (c.puntos[i].id===pid) pt=c.puntos[i];
+  var g = null, gs = grupos(c.id); for (var j=0;j<gs.length;j++) if (gs[j].id===gid) g=gs[j];
+  var d = document.createElement("div");
+  d.className = "pop";
+  var oh = "";
+  for (var k=0;k<4;k++) oh += '<button class="opt o'+k+(cell.e===k?" on":"")+'" data-v="'+k+'">'+GLY[k]+' '+EST[k]+'</button>';
+  d.innerHTML = '<h4>'+esc(g?g.nombre:"")+'</h4><div class="who">'+esc(pt?pt.t:"")+'</div>'+
+    '<div class="opts">'+oh+'</div>'+
+    '<input type="url" id="popl" placeholder="Enlace del archivo de este punto" value="'+esc(cell.l)+'">'+
+    '<textarea id="popn" placeholder="Observación para el grupo (opcional)">'+esc(cell.n)+'</textarea>'+
+    (cell.l?'<a class="open" href="'+esc(cell.l)+'" target="_blank" rel="noopener">Abrir el enlace guardado</a>':'')+
+    '<div class="row"><button class="btn" data-act="close">Cerrar</button><button class="btn primary" data-act="apply">Aplicar</button></div>';
+  document.body.appendChild(d);
+  var r = btn.getBoundingClientRect();
+  var left = Math.min(Math.max(8, r.left + r.width/2 - 132), window.innerWidth - 272);
+  var top = r.bottom + 8;
+  if (top + d.offsetHeight > window.innerHeight - 8) top = Math.max(8, r.top - d.offsetHeight - 8);
+  d.style.left = left + "px"; d.style.top = top + "px";
+  pop = d;
+  var chosen = cell.e;
+  d.addEventListener("click", function(ev){
+    var o = ev.target.closest(".opt");
+    if (o){
+      chosen = parseInt(o.getAttribute("data-v"),10);
+      var all = d.querySelectorAll(".opt");
+      for (var z=0;z<all.length;z++) all[z].classList.toggle("on", all[z]===o);
+      return;
+    }
+    var act = ev.target.closest("[data-act]");
+    if (!act) return;
+    if (act.getAttribute("data-act")==="close"){ closePop(); return; }
+    var nuevo = { e:chosen, n:d.querySelector("#popn").value.trim(), l:d.querySelector("#popl").value.trim() };
+    DATA.avance[c.id+"|"+pid+"|"+gid] = nuevo;
+    closePop(); render(); guardarAvance(c.id, pid, gid, nuevo);
+  });
+  d.querySelector("#popl").focus();
+}
+
+document.addEventListener("click", function(ev){
+  var t = ev.target;
+  if (!t || !t.closest) return;
+  var st = t.closest(".st");
+  if (st){ openPop(st); return; }
+  if (pop && !t.closest(".pop")) closePop();
+  var tab = t.closest(".tab");
+  if (tab){ view.ciclo = tab.getAttribute("data-ciclo"); view.ud=""; view.eq=""; guardarVista(); render(); return; }
+  if (t.id === "addG"){
+    var c = cic(), gs = grupos(c.id);
+    var orden = gs.length ? Math.max.apply(null, gs.map(function(x){return x.orden;})) + 1 : 1;
+    marcarGuardando();
+    api("mkt_grupo", { method:"POST", prefer:"return=representation",
+      body:[{ ciclo:c.id, orden:orden, nombre:"Grupo "+orden }] })
+      .then(function(rows){
+        marcarListo();
+        var g = rows[0];
+        if (!DATA.grupos[c.id]) DATA.grupos[c.id] = [];
+        DATA.grupos[c.id].push({id:g.id, orden:g.orden, nombre:g.nombre, marca:"", link:"", int:["","",""]});
+        render(); abrirPanel();
+      }).catch(marcarListo);
+    return;
+  }
+  if (t.id === "delG"){
+    var c2 = cic(), gs2 = grupos(c2.id);
+    if (gs2.length <= 1) return;
+    var last = gs2[gs2.length-1];
+    if (!window.confirm("Se eliminará " + last.nombre + " y todo su avance registrado. ¿Continuar?")) return;
+    marcarGuardando();
+    api("mkt_grupo?id=eq." + encodeURIComponent(last.id), { method:"DELETE", prefer:"return=minimal" })
+      .then(function(){
+        marcarListo();
+        DATA.grupos[c2.id] = gs2.slice(0, gs2.length-1);
+        for (var kk in DATA.avance) if (kk.indexOf("|"+last.id) === kk.length - last.id.length - 1) delete DATA.avance[kk];
+        render(); abrirPanel();
+      }).catch(marcarListo);
+    return;
+  }
+});
+function abrirPanel(){ var p = document.querySelector("details.panel"); if (p) p.open = true; }
+function guardarVista(){ try{ localStorage.setItem("ctrl-view", JSON.stringify(view)); }catch(e){} }
+
+document.addEventListener("change", function(ev){
+  var t = ev.target;
+  if (t.id === "fud"){ view.ud = t.value; guardarVista(); render(); return; }
+  if (t.id === "feq"){ view.eq = t.value; guardarVista(); render(); return; }
+});
+
+var timers = {};
+function debounce(key, fn){ clearTimeout(timers[key]); timers[key] = setTimeout(fn, 700); }
+
+document.addEventListener("input", function(ev){
+  var t = ev.target, kind = t.getAttribute && t.getAttribute("data-kind");
+  if (!kind) return;
+  var c = cic(), id = t.getAttribute("data-id"), val = t.value, i;
+  if (kind === "doc"){
+    DATA.docentes[c.id+"|"+id] = val;
+    debounce("doc"+id, function(){ guardarDocente(c.id, id, val); });
+    return;
+  }
+  var gs = grupos(c.id), g = null;
+  for (i=0;i<gs.length;i++) if (gs[i].id===id) g = gs[i];
+  if (!g) return;
+  var campos = null;
+  if (kind === "gn"){ g.nombre = val; campos = {nombre:val}; }
+  if (kind === "gm"){ g.marca = val; campos = {marca:val}; }
+  if (kind === "gl"){ g.link = val; campos = {link:val}; }
+  if (kind === "gi0"){ g.int[0] = val; campos = {integrante1:val}; }
+  if (kind === "gi1"){ g.int[1] = val; campos = {integrante2:val}; }
+  if (kind === "gi2"){ g.int[2] = val; campos = {integrante3:val}; }
+  if (kind.indexOf("gi") === 0){ var dl = document.getElementById("lista-est"); if (dl) dl.innerHTML = opcionesEst(c); }
+  if (campos) debounce(kind+id, function(){ guardarGrupo(id, campos); });
+});
+
+window.addEventListener("resize", closePop);
+
+/* -------- CSV -------- */
+function csv(){
+  var c = cic(), gs = grupos(c.id), rows = [];
+  var head = ["Capítulo","Punto del informe","Unidad didáctica","Docente"];
+  for (var j=0;j<gs.length;j++){
+    var mm = (gs[j].int||[]).filter(function(x){ return x && x.trim(); });
+    var nm = gs[j].nombre + (gs[j].marca ? " — " + gs[j].marca : "") + (mm.length ? " (" + mm.join(", ") + ")" : "");
+    head.push(nm); head.push(nm + " - observación"); head.push(nm + " - enlace");
+  }
+  rows.push(head);
+  for (var i=0;i<c.puntos.length;i++){
+    var p = c.puntos[i], un = null;
+    for (var z=0;z<c.unidades.length;z++) if (c.unidades[z].id===p.ud) un = c.unidades[z];
+    var r = [p.cap, p.t, un?un.nombre:p.ud, docenteDe(c.id,p.ud)];
+    for (var k=0;k<gs.length;k++){ var cl = cellOf(c.id,p.id,gs[k].id); r.push(EST[cl.e]); r.push(cl.n); r.push(cl.l); }
+    rows.push(r);
+  }
+  var txt = rows.map(function(r){
+    return r.map(function(x){ return '"' + String(x==null?"":x).replace(/"/g,'""') + '"'; }).join(";");
+  }).join("\r\n");
+  return "﻿" + txt;
+}
+
+document.getElementById("btnCsv").addEventListener("click", function(){
+  var url = URL.createObjectURL(new Blob([csv()], {type:"text/csv"}));
+  var a = document.createElement("a");
+  a.href = url; a.download = "Avance " + cic().nombre + " " + E.periodo + ".csv"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+});
+document.getElementById("btnRefresh").addEventListener("click", function(){ closePop(); cargar(false); });
+
+setInterval(function(){
+  if (document.hidden || pop || pendientes) return;
+  cargar(true);
+}, 60000);
+
+render();
+cargar(false);
+})();
+</script>
+
+</body>
+</html>
