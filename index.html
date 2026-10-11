@@ -406,36 +406,60 @@ function sfx(tipo){
   tono(d, 880, t, 0.08, 0.045, "sine"); tono(d, 1318.5, t+0.03, 0.07, 0.022, "sine");
 }
 
-/* -------- música de fondo suave (acordes generados, libres de derechos) -------- */
-var MUS = { on:false, timer:null, out:null, next:0, paso:0 };
-var ACORDES = [[261.63,329.63,392.00,493.88],[220.00,261.63,329.63,392.00],[174.61,220.00,261.63,329.63],[196.00,246.94,293.66,392.00]];
-var ARPEGIO = [0,1,2,3,2,1,2,1];
+/* -------- música de fondo suave (generada en el navegador, libre de derechos) --------
+   Cada ciclo tiene su propia canción: acordes, ritmo, timbre y brillo distintos. */
+var CANCIONES = {
+  /* MKT I: pop alegre en Do mayor (C - G - Am - F) */
+  mkt1: { paso:0.40, brillo:1700, arpTipo:"triangle", arpOct:2, arpVol:0.034, padVol:0.045,
+          arp:[0,2,1,3,2,1,3,2],
+          acordes:[[261.63,329.63,392.00,523.25],[196.00,246.94,293.66,392.00],[220.00,261.63,329.63,440.00],[174.61,220.00,261.63,349.23]] },
+  /* MKT III: bossa tranquila (Dm7 - G7 - Cmaj7 - A7) */
+  mkt3: { paso:0.46, brillo:1300, arpTipo:"sine", arpOct:2, arpVol:0.045, padVol:0.05,
+          arp:[0,2,3,1,2,3,1,2],
+          acordes:[[146.83,174.61,220.00,261.63],[196.00,246.94,293.66,349.23],[261.63,329.63,392.00,493.88],[220.00,277.18,329.63,392.00]] },
+  /* MKT IV: ambiente soñador y lento (Fmaj7 - Em7 - Dm7 - Cmaj7) */
+  mkt4: { paso:0.58, brillo:1100, arpTipo:"sine", arpOct:4, arpVol:0.025, padVol:0.055,
+          arp:[0,1,2,3,3,2,1,0],
+          acordes:[[174.61,220.00,261.63,329.63],[164.81,196.00,246.94,293.66],[146.83,174.61,220.00,261.63],[130.81,164.81,196.00,246.94]] },
+  /* Cualquier otro ciclo */
+  otro: { paso:0.50, brillo:1400, arpTipo:"triangle", arpOct:2, arpVol:0.035, padVol:0.05,
+          arp:[0,1,2,3,2,1,2,1],
+          acordes:[[261.63,329.63,392.00,493.88],[220.00,261.63,329.63,392.00],[174.61,220.00,261.63,329.63],[196.00,246.94,293.66,392.00]] }
+};
+var MUS = { on:false, timer:null, out:null, next:0, paso:0, cancion:null, id:"" };
 function programarMusica(){
-  var a = AC; if (!a || !MUS.on) return;
+  var a = AC, k = MUS.cancion; if (!a || !MUS.on || !k) return;
   while (MUS.next < a.currentTime + 1.5){
-    var t = MUS.next, n = MUS.paso, acorde = ACORDES[Math.floor(n/8) % ACORDES.length];
+    var t = MUS.next, n = MUS.paso, acorde = k.acordes[Math.floor(n/8) % k.acordes.length];
     if (n % 8 === 0){
-      for (var i=0;i<acorde.length;i++) tono(MUS.out, acorde[i], t, 4.4, 0.05, "sine", 1.2);
-      tono(MUS.out, acorde[0]/2, t, 3.9, 0.09, "sine", 0.3);
+      for (var i=0;i<acorde.length;i++) tono(MUS.out, acorde[i], t, k.paso*8.8, k.padVol, "sine", 1.2);
+      tono(MUS.out, acorde[0]/2, t, k.paso*7.8, 0.09, "sine", 0.3);
     }
-    tono(MUS.out, acorde[ARPEGIO[n % 8]]*2, t, 0.9, 0.035, "triangle", 0.02);
-    MUS.next += 0.5; MUS.paso = (n + 1) % 32;
+    tono(MUS.out, acorde[k.arp[n % 8]]*k.arpOct, t, k.paso*1.8, k.arpVol, k.arpTipo, 0.02);
+    MUS.next += k.paso; MUS.paso = (n + 1) % 32;
   }
 }
 function iniciarMusica(){
   if (MUS.on || !prefs.music) return;
   var a = ac(); if (!a) return;
-  if (!MUS.out){
-    var lp = a.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1400;
-    MUS.out = a.createGain(); MUS.out.gain.value = 0.22; MUS.out.connect(lp); lp.connect(a.destination);
-  }
-  MUS.on = true; MUS.next = a.currentTime + 0.1;
+  MUS.id = view.ciclo; MUS.cancion = CANCIONES[view.ciclo] || CANCIONES.otro;
+  var lp = a.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = MUS.cancion.brillo;
+  MUS.out = a.createGain(); MUS.out.gain.setValueAtTime(0.0001, a.currentTime);
+  MUS.out.gain.linearRampToValueAtTime(0.22, a.currentTime + 1.2);
+  MUS.out.connect(lp); lp.connect(a.destination);
+  MUS.on = true; MUS.paso = 0; MUS.next = a.currentTime + 0.1;
   programarMusica(); MUS.timer = setInterval(programarMusica, 300);
 }
 function pararMusica(){
   MUS.on = false; clearInterval(MUS.timer); MUS.timer = null;
-  if (MUS.out && AC){ var g = MUS.out.gain, t = AC.currentTime; g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0.0001, t + 0.6);
-    setTimeout(function(){ if (!MUS.on && MUS.out){ MUS.out.disconnect(); MUS.out = null; } }, 800); }
+  var out = MUS.out; MUS.out = null;
+  if (out && AC){ var g = out.gain, t = AC.currentTime; g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0.0001, t + 0.8);
+    setTimeout(function(){ out.disconnect(); }, 2500); }
+}
+/* Al cambiar de ciclo, la canción anterior se apaga suavemente y entra la nueva. */
+function cambiarCancion(){
+  if (!MUS.on || MUS.id === view.ciclo) return;
+  pararMusica(); setTimeout(iniciarMusica, 500);
 }
 /* El navegador solo permite sonar después del primer toque del usuario. */
 document.addEventListener("pointerdown", function(){ if (prefs.music) iniciarMusica(); }, true);
@@ -941,7 +965,7 @@ document.addEventListener("click", function(ev){
   if (cr){ var ck = capKey(cic().id, cr.getAttribute("data-cap"));
     if (view.closed[ck]) delete view.closed[ck]; else view.closed[ck] = 1; guardarVista(); renderKeep(); return; }
   var tab = t.closest(".tab");
-  if (tab){ view.ciclo = tab.getAttribute("data-ciclo"); view.ud=""; view.eq=""; guardarVista(); render(); return; }
+  if (tab){ view.ciclo = tab.getAttribute("data-ciclo"); view.ud=""; view.eq=""; guardarVista(); render(); cambiarCancion(); return; }
   var b = t.closest("button"); if (!b) return;
   if (b.id === "hideHello"){ view.hideHello = true; guardarVista(); renderKeep(); return; }
   if (b.id === "btnRetry"){ cargar(false); return; }
