@@ -864,25 +864,53 @@ function openEduardo(){
   var c = cic();
   var d = abrirVentana(
     '<div class="who">Mensaje para Eduardo</div><h3>¿Qué te gustaría cambiar o mejorar?</h3>'+
-    '<p class="pt">Escribe tu pedido y envíalo por WhatsApp o por correo. Eduardo lo revisará.</p>'+
-    '<label class="l" for="enom">Tu nombre</label><input type="text" id="enom" value="'+esc(prefs.nombre)+'" placeholder="Ejemplo: Natalia Medina">'+
-    '<label class="l" for="emsg">Tu mensaje</label><textarea id="emsg" placeholder="Ejemplo: En '+esc(c.nombre)+', agregar el punto…" style="min-height:120px"></textarea>'+
+    '<p class="pt">Escribe tu pedido y pulsa Enviar. Le llegará directamente a Eduardo.</p>'+
+    '<label class="l" for="enom">Tu nombre</label><input type="text" id="enom" value="'+esc(prefs.nombre)+'" placeholder="Carlos">'+
+    '<label class="l" for="emsg">Tu mensaje</label><textarea id="emsg" placeholder="Escribe aquí lo que quieres que cambie…" style="min-height:120px"></textarea>'+
     '<p class="err" id="eerr"></p>'+
-    '<div class="two"><button class="btn wa" data-act="wa">💬 Enviar por WhatsApp</button><button class="btn mail" data-act="mail">✉️ Enviar por correo</button></div>'+
-    '<div class="row" style="margin-top:10px"><button class="btn ghost" data-act="close">Cancelar</button></div>');
-  function armar(){
+    '<div class="row"><button class="btn ghost" data-act="close">Cancelar</button><button class="btn primary" data-act="send">📨 Enviar mensaje</button></div>'+
+    '<div id="eplanb" hidden><p class="pt" style="margin:14px 0 8px">También puedes enviarlo así:</p>'+
+    '<div class="two"><button class="btn wa" data-act="wa">💬 WhatsApp</button><button class="btn mail" data-act="mail">✉️ Correo</button></div></div>');
+  function datos(){
     var nom = d.querySelector("#enom").value.trim(), msg = d.querySelector("#emsg").value.trim();
     if (!msg){ d.querySelector("#eerr").textContent = "Escribe tu mensaje antes de enviarlo."; sfx("err"); d.querySelector("#emsg").focus(); return null; }
     prefs.nombre = nom; guardarPrefs();
-    return "Hola Eduardo, te escribo desde el tablero de avance (" + c.nombre + " · " + c.ciclo + ").\n\n" + msg + (nom ? "\n\n— " + nom : "");
+    return { nom: nom, msg: msg,
+      texto: "Hola Eduardo, te escribo desde el tablero de avance (" + c.nombre + " · " + c.ciclo + ").\n\n" + msg + (nom ? "\n\n— " + nom : "") };
+  }
+  function enviado(nom){
+    sfx("ok");
+    d.querySelector(".modal").innerHTML =
+      '<div style="text-align:center"><img src="img/personaje-consejo.webp" alt="" style="height:170px;width:auto">'+
+      '<h3 style="margin-top:8px">✅ ¡Mensaje enviado!</h3>'+
+      '<p class="pt">Gracias' + (nom ? ', ' + esc(nom.split(" ")[0]) : '') + '. Eduardo recibirá tu pedido y lo revisará pronto.</p>'+
+      '<div class="row"><button class="btn primary" data-act="close">Listo</button></div></div>';
+  }
+  function fallo(){
+    sfx("err");
+    var b = d.querySelector("[data-act=send]"); b.disabled = false; b.textContent = "📨 Reintentar";
+    d.querySelector("#eerr").textContent = "No se pudo enviar ahora. Revisa tu internet o usa una de estas opciones.";
+    d.querySelector("#eplanb").hidden = false;
   }
   d.addEventListener("click", function(ev){
     var act = ev.target.closest("[data-act]"); if (!act) return;
     var a = act.getAttribute("data-act");
     if (a === "close"){ closeModal(); return; }
-    var texto = armar(); if (!texto) return;
-    if (a === "wa") window.open("https://wa.me/" + EDU_WSP + "?text=" + encodeURIComponent(texto), "_blank", "noopener");
-    if (a === "mail") window.location.href = "mailto:" + EDU_MAIL + "?subject=" + encodeURIComponent("Tablero de avance MKT: pedido de cambio") + "&body=" + encodeURIComponent(texto);
+    var x = datos(); if (!x) return;
+    if (a === "send"){
+      act.disabled = true; act.textContent = "Enviando…"; d.querySelector("#eerr").textContent = "";
+      /* FormSubmit reenvía el mensaje al correo de Eduardo sin abrir ningún programa. */
+      fetch("https://formsubmit.co/ajax/" + EDU_MAIL, {
+        method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ _subject: "Tablero MKT: pedido de cambio (" + c.nombre + ")", _template: "table", _captcha: "false",
+          Nombre: x.nom || "(sin nombre)", Ciclo: c.nombre + " · " + c.ciclo, Mensaje: x.msg, Fecha: new Date().toLocaleString("es-PE") })
+      }).then(function(r){ return r.json(); })
+        .then(function(j){ if (j && (j.success === true || j.success === "true")) enviado(x.nom); else fallo(); })
+        .catch(fallo);
+      return;
+    }
+    if (a === "wa") window.open("https://wa.me/" + EDU_WSP + "?text=" + encodeURIComponent(x.texto), "_blank", "noopener");
+    if (a === "mail") window.location.href = "mailto:" + EDU_MAIL + "?subject=" + encodeURIComponent("Tablero de avance MKT: pedido de cambio") + "&body=" + encodeURIComponent(x.texto);
     sfx("save"); closeModal();
   });
   d.querySelector("#emsg").focus({preventScroll:true});
