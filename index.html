@@ -625,23 +625,6 @@ function renderHello(){
     '<li><span class="n">3</span><span>Toca el botón de cada grupo y marca cómo va. Se guarda solo.</span></li>'+
     '</ol></div><button class="btn small ghost x" id="hideHello">Ocultar ✕</button></section>';
 }
-function renderGuia(c){
-  var g = c.guia; if (!g) return "";
-  var h = '<details class="box" data-k="guia"><summary><span class="pl"></span>Guía del proyecto <span class="hint">· qué se pide, entregables y rúbrica</span></summary><div class="box-body">';
-  h += '<div class="guide-top"><img src="img/personaje-guia.webp" alt="" width="261" height="480"><div><p class="lead">'+esc(g.resumen)+'</p><ol class="steps">';
-  for (var i=0;i<g.pasos.length;i++) h += '<li><b>'+esc(g.pasos[i][0])+'</b>'+esc(g.pasos[i][1])+'</li>';
-  h += '</ol></div></div><div class="grid2">';
-  h += '<div><p class="subh">Tipo de propuesta esperada</p><p class="txt">'+esc(g.propuesta)+'</p>';
-  h += '<p class="subh">Condiciones del informe</p><ul class="lst">';
-  for (var k=0;k<g.condiciones.length;k++) h += '<li>'+esc(g.condiciones[k])+'</li>';
-  h += '</ul></div><div><p class="subh">Entregables</p><ul class="lst">';
-  for (var j=0;j<g.entregables.length;j++) h += '<li>'+esc(g.entregables[j])+'</li>';
-  h += '</ul></div></div>';
-  h += '<p class="subh">Rúbrica del informe final (5 criterios × 4 puntos = 20)</p><div class="rub"><table><thead><tr><th>Criterio</th><th>Excelente (4)</th><th>Bueno (3)</th><th>Satisfactorio (2)</th><th>Insuficiente (1)</th></tr></thead><tbody>';
-  for (var r=0;r<g.rubrica.length;r++){ h += '<tr>'; for (var q=0;q<5;q++) h += '<td>'+esc(g.rubrica[r][q])+'</td>'; h += '</tr>'; }
-  h += '</tbody></table></div></div></details>';
-  return h;
-}
 function botonGrupo(g){
   var l = lider(g);
   var txt = l ? "📂 Abrir grupo de " + corto(l) : "📂 Abrir " + g.nombre;
@@ -688,8 +671,6 @@ function render(){
   h += '<div class="card s2"><span class="k">! Observados</span><div class="v">'+tl.t[2]+'</div></div>';
   h += '<div class="card s0"><span class="k">○ Pendientes</span><div class="v">'+tl.t[0]+'</div></div>';
   h += '</div>';
-
-  h += renderGuia(c);
 
   h += '<div class="filters">';
   h += '<div class="field"><label for="fud">Mi unidad didáctica</label><select id="fud"'+(view.ud?' class="on"':'')+'><option value="">Ver todas las unidades</option>';
