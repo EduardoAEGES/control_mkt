@@ -456,11 +456,11 @@ function pct(n,d){ return d ? Math.round(n*100/d) : 0; }
 function capKey(cid,cap){ return cid+"|"+cap; }
 function guardarVista(){ try{ localStorage.setItem("ctrl-view", JSON.stringify(view)); }catch(e){} }
 
-/* "Apellido Apellido Nombre Nombre" -> "Nombre Apellido" */
+/* "Apellido Apellido Nombre Nombre" -> "Nombre" (solo el primer nombre) */
 function corto(n){
   var w = String(n||"").trim().split(/\s+/);
   if (!w[0]) return "";
-  return w.length >= 3 ? w[2] + " " + w[0] : w.join(" ");
+  return w.length >= 3 ? w[2] : w[w.length-1];
 }
 function lider(g){ return (g.int && g.int[0] && g.int[0].trim()) ? g.int[0].trim() : ""; }
 function etiquetaGrupo(g){ var l = lider(g); return l ? "Grupo de " + corto(l) : g.nombre; }
