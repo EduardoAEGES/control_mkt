@@ -65,14 +65,13 @@ h1{font-size:28px;line-height:1.2;margin:2px 0 0;font-weight:900;letter-spacing:
 /* ---------- pestañas de ciclo ---------- */
 .tabs{max-width:1360px;margin:0 auto;padding:18px 20px 0;display:flex;gap:10px;flex-wrap:wrap}
 .tab{
-  border:3px solid transparent;background:var(--surface);border-radius:16px;padding:10px 20px;
-  font-weight:900;font-size:18px;color:var(--ink-2);box-shadow:0 1px 2px rgba(0,0,0,.05);
-  display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;min-width:120px;
+  border:3px solid transparent;background:var(--surface);border-radius:14px;padding:8px 18px;
+  font-weight:700;font-size:17px;color:var(--ink-2);box-shadow:0 1px 2px rgba(0,0,0,.05);
+  display:inline-flex;align-items:center;gap:6px;line-height:1.2;white-space:nowrap;
 }
-.tab .sub{font-weight:700;font-size:13px;color:var(--ink-3)}
+.tab b{font-weight:900}
 .tab:hover{border-color:var(--tc)}
 .tab[aria-selected="true"]{background:var(--tc);color:#fff;border-color:var(--tc);box-shadow:0 6px 16px -6px var(--tc)}
-.tab[aria-selected="true"] .sub{color:rgba(255,255,255,.88)}
 
 /* ---------- bienvenida ---------- */
 .hello{
@@ -89,22 +88,23 @@ h1{font-size:28px;line-height:1.2;margin:2px 0 0;font-weight:900;letter-spacing:
 .hello .x{position:absolute;top:10px;right:12px}
 
 /* ---------- proyecto ---------- */
-.proj{margin:22px 0 14px;padding:18px 22px;border-radius:var(--r);background:var(--surface);border-left:8px solid var(--cc);box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.proj{margin:20px 0 12px;padding:14px 22px;border-radius:var(--r);background:var(--surface);border-left:8px solid var(--cc);box-shadow:0 1px 2px rgba(0,0,0,.04)}
 .proj .k{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--cc-ink)}
-.proj h2{margin:2px 0 4px;font-size:24px;line-height:1.25;font-weight:900}
+.proj h2{margin:0;font-size:24px;line-height:1.25;font-weight:900}
 .proj .meta{color:var(--ink-2);font-size:16px}
 
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
-.card{border-radius:var(--r);padding:14px 18px;background:var(--surface);border:2px solid var(--line-soft)}
+.card{border-radius:14px;padding:9px 16px;background:var(--surface);border:2px solid var(--line-soft);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .card .k{font-size:14px;font-weight:800;color:var(--ink-2);display:flex;align-items:center;gap:6px}
-.card .v{font-size:34px;font-weight:900;line-height:1.1;margin-top:4px;font-variant-numeric:tabular-nums}
+.card .v{font-size:26px;font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
 .card.main{background:var(--cc);border-color:var(--cc);color:#fff}
 .card.main .k{color:rgba(255,255,255,.92)}
 .card.s3{background:var(--st3-bg);border-color:var(--st3-bd)} .card.s3 .v{color:var(--st3)}
 .card.s1{background:var(--st1-bg);border-color:var(--st1-bd)} .card.s1 .v{color:var(--st1)}
 .card.s2{background:var(--st2-bg);border-color:var(--st2-bd)} .card.s2 .v{color:var(--st2)}
 .card.s0 .v{color:var(--st0)}
-.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.35);overflow:hidden;margin-top:8px}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.35);overflow:hidden;margin-top:2px}
+.card .bar{flex:1 0 100%}
 .bar > i{display:block;height:100%;background:#fff;border-radius:99px}
 
 /* ---------- filtros ---------- */
@@ -163,7 +163,8 @@ tbody td{border-bottom:1px solid var(--line-soft)}
 td.stub{padding:14px 18px;border-right:2px solid var(--line-soft)}
 .ptxt{display:block;font-size:17px;font-weight:700;line-height:1.4}
 .ud{display:inline-block;margin-top:6px;font-size:13px;font-weight:800;color:var(--ink-2);background:var(--sunken);padding:3px 10px;border-radius:99px}
-.ud.mine{background:var(--cc-soft);color:var(--cc-ink)}
+.ud.todos{background:#FFFFFF;border:2px dashed var(--line);color:var(--ink-2)}
+td.stub{box-shadow:inset 6px 0 0 var(--udc,transparent)}
 td.cell{text-align:center;padding:10px;vertical-align:middle}
 tbody tr:not(.caprow):hover td{background:#FFFCF9}
 .st{
@@ -263,14 +264,14 @@ footer.foot{max-width:1360px;margin:24px auto 0;padding:0 20px 30px;color:var(--
   h1{font-size:22px}
   .logo img{height:46px}
   .brand{padding-left:0;border-left:none;flex-basis:100%}
-  .tab{min-width:0;flex:1 1 40%;font-size:17px;padding:9px 14px}
+  .tab{flex:1 1 40%;justify-content:center;font-size:16px;padding:8px 10px}
   .hello{padding:0 14px}
   .hello img{display:none}
   .hello .txt{padding:18px 0}
   .hello h2{padding-right:70px}
   .cards{grid-template-columns:1fr 1fr;gap:10px}
   .card.main{grid-column:1 / -1}
-  .card{padding:12px 14px} .card .v{font-size:28px}
+  .card{padding:8px 12px} .card .v{font-size:22px}
   details.box > summary .hint{display:none}
   .proj h2{font-size:21px}
   .tablebox{background:transparent;border:none}
@@ -292,7 +293,31 @@ footer.foot{max-width:1360px;margin:24px auto 0;padding:0 20px 30px;color:var(--
 .gcards{display:none;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
 .gcard{background:var(--surface);border:2px solid var(--line-soft);border-radius:14px;padding:12px 14px}
 .gcard .openg{margin:8px 0 4px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* ---------- personaje flotante ---------- */
+body{padding-bottom:70px}
+.eduf{position:fixed;right:14px;bottom:8px;z-index:70;display:flex;align-items:flex-end;gap:2px;border:none;background:none;padding:0;cursor:pointer}
+.eduf img{height:130px;width:auto;filter:drop-shadow(0 6px 10px rgba(80,40,30,.25));animation:flota 3.2s ease-in-out infinite}
+.eduf .bub{background:#fff;border:3px solid var(--cc);color:var(--ink);border-radius:18px 18px 4px 18px;padding:8px 12px;font-weight:900;font-size:15px;line-height:1.25;max-width:190px;margin-bottom:76px;box-shadow:var(--shadow);text-align:left}
+.eduf .bub small{display:block;font-weight:700;font-size:13px;color:var(--ink-2)}
+.eduf .bub{animation:escondeBub .5s ease 8s forwards}
+.eduf:hover .bub,.eduf:focus-visible .bub{animation:none;opacity:1;transform:none;background:var(--cc-soft)}
+@keyframes escondeBub{to{opacity:0;transform:scale(.6) translateX(30px);pointer-events:none}}
+.eduf img{height:110px}
+@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.wa{background:#25D366!important;border-color:#25D366!important;color:#fff!important}
+.mail{background:#2F80ED!important;border-color:#2F80ED!important;color:#fff!important}
+.modal .two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.modal .two .btn{justify-content:center;padding:13px 10px;font-size:16px}
+.modal input[type=text]{width:100%;border:2px solid var(--line);border-radius:12px;padding:11px 12px;font-size:16px;background:var(--soft);margin-bottom:14px}
+.snd{min-width:0}
+.snd.off{opacity:.55;text-decoration:line-through}
+@media (max-width:760px){
+  .eduf img{height:86px}
+  .eduf .bub{font-size:13px;max-width:130px;margin-bottom:46px;padding:6px 10px}
+  .eduf .bub small{display:none}
+  .modal .two{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -310,8 +335,12 @@ footer.foot{max-width:1360px;margin:24px auto 0;padding:0 20px 30px;color:var(--
 
 <div class="wrap"><div id="app"></div></div>
 <footer class="foot" id="foot"></footer>
+<button class="eduf" id="eduf" aria-label="Enviar un mensaje a Eduardo">
+  <span class="bub">¿Algo que cambiar?<small>Escríbele a Eduardo</small></span>
+  <img src="img/personaje-consejo.webp" alt="" width="229" height="480">
+</button>
 
-<script id="estructura" type="application/json">{"periodo":"2026-II","ciclos":[{"id":"mkt1","nombre":"MKT 1","ciclo":"I Ciclo","titulo":"Análisis integral de un producto arequipeño","estudiantes":["Briceño Cjuro Yasmin","Ccoyllulli Conza Estefani","Iquiapaza Cutipa Eymi Angeles","Pacsi Ibañez Ruth Vanessa","Salas Trelles Nicole Naomi","Torres Benegas Daniela Fiorela"],"unidades":[{"id":"FM","nombre":"Fundamentos de Marketing"},{"id":"ARE","nombre":"Análisis de la Realidad Económica"},{"id":"MA","nombre":"Matemática Aplicada"},{"id":"CC","nombre":"Comportamiento del Consumidor"},{"id":"TC","nombre":"Trabajo Colaborativo"},{"id":"CE","nombre":"Comunicación Efectiva"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"CE"},{"id":"p1","cap":"Preliminares","t":"Presentación del equipo y distribución de roles","ud":"TC"},{"id":"p2","cap":"Capítulo 1 · Marco teórico","t":"1.1 Antecedentes de la marca, empresa o producto","ud":"FM"},{"id":"p3","cap":"Capítulo 1 · Marco teórico","t":"1.2 Desarrollo monográfico de conceptos económicos (PBI, IPC, inflación)","ud":"ARE"},{"id":"p4","cap":"Capítulo 1 · Marco teórico","t":"1.2.5 Diagnóstico socioeconómico de la región Arequipa","ud":"ARE"},{"id":"p5","cap":"Capítulo 2 · Análisis de la información","t":"2.1 Método de investigación y elaboración del instrumento","ud":"CC"},{"id":"p6","cap":"Capítulo 2 · Análisis de la información","t":"2.2 Determinación del público objetivo y factores del consumidor","ud":"CC"},{"id":"p7","cap":"Capítulo 2 · Análisis de la información","t":"2.3 Propuesta de valor y posicionamiento buscado","ud":"FM"},{"id":"p8","cap":"Capítulo 2 · Análisis de la información","t":"2.4 Producto: tipos y ciclo de vida","ud":"FM"},{"id":"p9","cap":"Capítulo 2 · Análisis de la información","t":"2.5 Precio: análisis de precios y estado de resultados","ud":"FM"},{"id":"p10","cap":"Capítulo 2 · Análisis de la información","t":"2.5.3 Cálculo de márgenes de utilidad (bruta, neta y operativa)","ud":"MA"},{"id":"p11","cap":"Capítulo 2 · Análisis de la información","t":"2.6 Distribución (Plaza) y canales","ud":"FM"},{"id":"p12","cap":"Capítulo 2 · Análisis de la información","t":"2.7 Comunicación (Promoción)","ud":"FM"},{"id":"p13","cap":"Capítulo 3 · Propuesta de campaña","t":"3.1 Diseño de la estrategia de campaña, insight y canales","ud":"FM"},{"id":"p14","cap":"Capítulo 3 · Propuesta de campaña","t":"3.1.2 Análisis de insights del consumidor","ud":"CC"},{"id":"p15","cap":"Capítulo 3 · Propuesta de campaña","t":"3.2 Proyecciones, flujo de caja e indicadores de rentabilidad","ud":"MA"},{"id":"p16","cap":"Cierre","t":"Conclusiones y recomendaciones","ud":"CE"},{"id":"p17","cap":"Cierre","t":"Bibliografía y referencias en formato APA 7.ª ed.","ud":"CE"},{"id":"p18","cap":"Anexos","t":"A.1 Instrumento aplicado y tabulación de resultados","ud":"CC"},{"id":"p19","cap":"Anexos","t":"A.2 Tablas y evidencia de los cálculos financieros","ud":"MA"},{"id":"p20","cap":"Anexos","t":"A.3 Acta de conformación del equipo y registro de avances","ud":"TC"},{"id":"p21","cap":"Sustentación","t":"Presentación visual y sustentación oral (15 minutos)","ud":"CE"}]},{"id":"mkt2","nombre":"MKT 2","ciclo":"II Ciclo","titulo":"Innovación de producto con enfoque sostenible","estudiantes":["Ccacyavilca Chara Nelida","Chayña Pérez Prudencio Américo","Diaz Quilla Corayma Anyelina","Huamani Quispe Diana","Paredes Rondón Valeria De Los Ángeles","Pinto Mendoza Rodrigo"],"unidades":[{"id":"CRE","nombre":"Creatividad Comercial"},{"id":"ICT","nombre":"Investigación Cuantitativa"},{"id":"ICL","nombre":"Investigación Cualitativa"},{"id":"EST","nombre":"Estadística Aplicada"},{"id":"SP","nombre":"Solución de Problemas"},{"id":"CA","nombre":"Cultura Ambiental"},{"id":"GEN","nombre":"General / Coordinación"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"p1","cap":"Capítulo 1 · Marco teórico","t":"1.1 Selección y justificación del tema a desarrollar","ud":"CRE"},{"id":"p2","cap":"Capítulo 1 · Marco teórico","t":"1.2 Antecedentes del producto o servicio","ud":"CRE"},{"id":"p3","cap":"Capítulo 1 · Marco teórico","t":"1.3.1 Sostenibilidad, conciencia ambiental y servicios ecosistémicos","ud":"CA"},{"id":"p4","cap":"Capítulo 1 · Marco teórico","t":"1.3.2 Normativa ambiental peruana, ISO 14001 y EMAS","ud":"CA"},{"id":"p5","cap":"Capítulo 1 · Marco teórico","t":"1.3.3 Fundamentos de identificación y solución de problemas","ud":"SP"},{"id":"p6","cap":"Capítulo 2 · Análisis de la información","t":"2.1 Problemática comercial: FODA, Ishikawa y 5 porqués","ud":"SP"},{"id":"p7","cap":"Capítulo 2 · Análisis de la información","t":"2.2.1 Planteamiento del problema, variables e hipótesis","ud":"ICT"},{"id":"p8","cap":"Capítulo 2 · Análisis de la información","t":"2.2.2 Técnicas de muestreo y tamaño de la muestra","ud":"ICT"},{"id":"p9","cap":"Capítulo 2 · Análisis de la información","t":"2.2.3 Diseño de instrumentos cuantitativos y escala de Likert","ud":"ICT"},{"id":"p10","cap":"Capítulo 2 · Análisis de la información","t":"2.2.4 Diseño de instrumentos cualitativos: entrevistas y focus group","ud":"ICL"},{"id":"p11","cap":"Capítulo 2 · Análisis de la información","t":"2.3.1 Procesamiento de datos en Excel o SPSS","ud":"EST"},{"id":"p12","cap":"Capítulo 2 · Análisis de la información","t":"2.3.2 Estadística descriptiva: tendencia central y dispersión","ud":"EST"},{"id":"p13","cap":"Capítulo 2 · Análisis de la información","t":"2.3.3 Gráficos, intervalos de confianza y pruebas de hipótesis","ud":"EST"},{"id":"p14","cap":"Capítulo 2 · Análisis de la información","t":"2.3.4 Sistematización de hallazgos cualitativos e insights","ud":"ICL"},{"id":"p15","cap":"Capítulo 2 · Análisis de la información","t":"2.4 Determinación del público objetivo","ud":"ICT"},{"id":"p16","cap":"Capítulo 2 · Análisis de la información","t":"2.5 Propuesta de valor, imagen y posicionamiento actual","ud":"CRE"},{"id":"p17","cap":"Capítulo 2 · Análisis de la información","t":"2.6.1 Estudio del producto: percepción, uso y satisfacción","ud":"ICT"},{"id":"p18","cap":"Capítulo 2 · Análisis de la información","t":"2.6.2 Evaluación del impacto ambiental del producto actual","ud":"CA"},{"id":"p19","cap":"Capítulo 3 · Propuesta de innovación","t":"3.1 Estrategia innovadora: Design Thinking, Lean Startup y storytelling","ud":"CRE"},{"id":"p20","cap":"Capítulo 3 · Propuesta de innovación","t":"3.2 Acciones eco-eficientes integradas a la propuesta","ud":"CA"},{"id":"p21","cap":"Capítulo 3 · Propuesta de innovación","t":"3.3 Viabilidad: matriz de priorización, costo-beneficio y KPI","ud":"SP"},{"id":"p22","cap":"Cierre","t":"Conclusiones, recomendaciones y bibliografía APA 7.ª ed.","ud":"GEN"},{"id":"p23","cap":"Anexos","t":"A.1 Prototipo del producto y evidencias del prototipado","ud":"CRE"},{"id":"p24","cap":"Anexos","t":"A.2 Instrumentos de recolección de datos aplicados","ud":"ICL"},{"id":"p25","cap":"Anexos","t":"A.3 Bases de datos y reportes de salida del software estadístico","ud":"EST"},{"id":"p26","cap":"Sustentación","t":"Presentación ejecutiva y defensa oral (20 minutos)","ud":"GEN"}]},{"id":"mkt3","nombre":"MKT 3","ciclo":"III Ciclo","titulo":"Análisis del marketing de servicios y propuesta de una nueva línea de servicio en una empresa arequipeña","estudiantes":["Aguirre Zegarra Antonio Steven","Apaza Jiménez Héctor Miguel","Huamanga Supa Flor Thalia","Mamani Mamani Yamilet Tania","Paredes Sangama Gabriel Tonny","Quiroga Castelo Josue Alexander"],"unidades":[{"id":"EP","nombre":"Estrategia de Producto"},{"id":"MS","nombre":"Marketing de Servicios"},{"id":"CRM","nombre":"Marketing Relacional y CRM"},{"id":"ACP","nombre":"Análisis de Costos y Presupuestos"},{"id":"ETI","nombre":"Ética y Ciudadanía"},{"id":"IG","nombre":"Igualdad de Género"},{"id":"GEN","nombre":"General / Coordinación"}],"puntos":[{"id":"s0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"s1","cap":"Capítulo 1 · Contexto y portafolio","t":"1.1 Presentación de la empresa y de su portafolio actual","ud":"EP"},{"id":"s2","cap":"Capítulo 1 · Contexto y portafolio","t":"1.2 Diagnóstico del portafolio con la Matriz BCG","ud":"EP"},{"id":"s3","cap":"Capítulo 1 · Contexto y portafolio","t":"1.3 Ciclo de vida y nivel de diferenciación del servicio principal","ud":"EP"},{"id":"s4","cap":"Capítulo 1 · Contexto y portafolio","t":"1.4 Diseño, empaque y storytelling vigentes de la marca","ud":"EP"},{"id":"s5","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.1 Características del servicio (intangibilidad, inseparabilidad, variabilidad, perecibilidad) y cómo se gestionan","ud":"MS"},{"id":"s6","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.2 Evaluación integral de las 7P del servicio actual","ud":"MS"},{"id":"s7","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.3 Calidad en la entrega y brechas en la experiencia del cliente","ud":"MS"},{"id":"s8","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.4 Gestión de reclamos y recuperación del servicio","ud":"MS"},{"id":"s9","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.5 Estrategias vigentes: fortalezas y brechas identificadas","ud":"MS"},{"id":"s10","cap":"Capítulo 3 · Diagnóstico relacional y fidelización","t":"3.1 Customer Journey y puntos de contacto actuales","ud":"CRM"},{"id":"s11","cap":"Capítulo 3 · Diagnóstico relacional y fidelización","t":"3.2 Satisfacción, lealtad y Valor del Cliente a Largo Plazo (CLV)","ud":"CRM"},{"id":"s12","cap":"Capítulo 3 · Diagnóstico relacional y fidelización","t":"3.3 Estrategias de retención y uso de herramientas CRM","ud":"CRM"},{"id":"s13","cap":"Capítulo 3 · Diagnóstico relacional y fidelización","t":"3.4 Implicancias para la nueva línea: automatización, gamificación y fidelización","ud":"CRM"},{"id":"s14","cap":"Capítulo 4 · Costos y capacidad financiera","t":"4.1 Clasificación de los costos actuales (fijos, variables, directos e indirectos)","ud":"ACP"},{"id":"s15","cap":"Capítulo 4 · Costos y capacidad financiera","t":"4.2 Costos del servicio y punto de equilibrio actual","ud":"ACP"},{"id":"s16","cap":"Capítulo 4 · Costos y capacidad financiera","t":"4.3 Índice costo-beneficio de las acciones de marketing","ud":"ACP"},{"id":"s17","cap":"Capítulo 4 · Costos y capacidad financiera","t":"4.4 Capacidad financiera y presupuesto referencial de la nueva línea","ud":"ACP"},{"id":"s18","cap":"Capítulo 5 · Cultura corporativa e inclusión","t":"5.1 Prácticas actuales de Responsabilidad Social Empresarial (RSE)","ud":"ETI"},{"id":"s19","cap":"Capítulo 5 · Cultura corporativa e inclusión","t":"5.2 Dilemas éticos en las operaciones y la publicidad","ud":"ETI"},{"id":"s20","cap":"Capítulo 5 · Cultura corporativa e inclusión","t":"5.3 Representación de género y estereotipos en la comunicación","ud":"IG"},{"id":"s21","cap":"Capítulo 5 · Cultura corporativa e inclusión","t":"5.4 Políticas de diversidad, equidad y prevención de la violencia laboral (variable Personas)","ud":"IG"},{"id":"s22","cap":"Capítulo 6 · Síntesis y oportunidad","t":"6.1 Oportunidades de innovación y sostenibilidad en el servicio","ud":"EP"},{"id":"s23","cap":"Capítulo 6 · Síntesis y oportunidad","t":"6.2 Oportunidad comercial y justificación de la nueva línea","ud":"EP"},{"id":"s24","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.1 Concepto, niveles y atributos del nuevo servicio","ud":"EP"},{"id":"s25","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.2 Público objetivo y propuesta de valor","ud":"EP"},{"id":"s26","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.3 Diferenciación y posicionamiento buscado","ud":"EP"},{"id":"s27","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.4 Empaque, identidad visual y storytelling","ud":"EP"},{"id":"s28","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.5 Estrategia de lanzamiento dentro del portafolio","ud":"EP"},{"id":"s29","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.6 Marketing Mix Ampliado (7P) de la nueva línea","ud":"MS"},{"id":"s30","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.7a Mecanismo de fidelización e indicador de seguimiento","ud":"CRM"},{"id":"s31","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.7b Punto de equilibrio sencillo de la nueva línea","ud":"ACP"},{"id":"s32","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.7c Dilema ético de la propuesta y su resolución","ud":"ETI"},{"id":"s33","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.7d Pieza de comunicación inclusiva","ud":"IG"},{"id":"s34","cap":"Cierre","t":"Conclusiones y recomendaciones estratégicas","ud":"GEN"},{"id":"s35","cap":"Cierre","t":"Bibliografía y referencias APA 7.ª ed.","ud":"GEN"},{"id":"s36","cap":"Anexos","t":"A.1 Excel con fórmulas activas: costos, punto de equilibrio y presupuestos","ud":"ACP"},{"id":"s37","cap":"Anexos","t":"A.2 Customer Journey Map y flujogramas de atención","ud":"MS"},{"id":"s38","cap":"Anexos","t":"A.3 Instrumentos de medición de la calidad y resumen de resultados","ud":"MS"},{"id":"s39","cap":"Anexos","t":"A.4a Análisis de publicidad y propuesta de manual ético","ud":"ETI"},{"id":"s40","cap":"Anexos","t":"A.4b Propuesta de políticas y manual de comunicación inclusiva","ud":"IG"},{"id":"s41","cap":"Anexos","t":"A.5 Ficha técnica, identidad visual y empaque de la nueva línea","ud":"EP"},{"id":"s42","cap":"Entregables finales","t":"Devolución a la empresa (documento de una página)","ud":"GEN"},{"id":"s43","cap":"Entregables finales","t":"Presentación ejecutiva y sustentación (20 minutos)","ud":"GEN"}],"guia":{"resumen":"El equipo actúa como consultor: analiza el marketing de servicios de una empresa arequipeña (eje central) y, a partir de las brechas que encuentra, propone una nueva línea de servicio complementaria con un programa de fidelización.","pasos":[["Analizar","Capítulo 2: características del servicio, 7P, calidad, brechas y reclamos, con evidencia propia."],["Complementar","Capítulos 1, 3, 4 y 5: portafolio (BCG), relación con el cliente (CLV), costos (punto de equilibrio) y cultura (ética y género)."],["Sintetizar","Capítulo 6: matriz de fortalezas y brechas; la oportunidad nace de al menos dos brechas del Capítulo 2."],["Diseñar","Capítulo 7: concepto, valor, posicionamiento, identidad, lanzamiento y 7P de la nueva línea, más su verificación (7.7)."]],"propuesta":"Servicio complementario o de valor agregado con programa de fidelización: membresía o suscripción, postventa o acompañamiento, servicio a medida para un segmento o servicio digital (reservas en línea, WhatsApp, delivery).","entregables":["Informe final de diagnóstico y propuesta (APA 7.ª ed., digital e impreso)","Ficha técnica de la nueva línea de servicio","Sustentación ejecutiva (máximo 20 minutos)","Devolución a la empresa (una página)","Repositorio de anexos: Excel con fórmulas, Customer Journey y flujogramas, instrumentos de calidad, evidencias gráficas y manuales"],"condiciones":["Informe de 40 a 55 páginas","Equipos de 2 a 3 estudiantes","Sustentación de 20 minutos","Formato APA 7.ª edición","Escala vigesimal; nota mínima aprobatoria 13"],"rubrica":[["Análisis del marketing de servicios (eje central)","Caracteriza el servicio, evalúa las 7P y mide calidad y brechas con evidencia propia.","Considera la mayoría de variables; brechas parcialmente sustentadas.","Superficial; omite variables de las 7P o de calidad.","No identifica brechas ni presenta evidencia."],["Diagnóstico complementario (portafolio, CRM, costos y cultura)","BCG, ciclo de vida, Customer Journey, CLV, punto de equilibrio, ética y género correctos y vinculados al análisis de servicios.","Correctos, con imprecisiones o vínculos débiles.","Incompletos o con errores; poca conexión.","Ausentes o erróneos; unidades aisladas."],["Síntesis y diseño de la nueva línea","Nace de al menos dos brechas del Cap. 2; concepto, valor, posicionamiento, identidad, lanzamiento y 7P innovadores, viables y coherentes.","Justificada en el diagnóstico, con imprecisiones en el diseño.","Poco desarrollada o con justificación débil.","Difusa o desconectada de los hallazgos."],["Coherencia, viabilidad y responsabilidad","Fidelización con indicador, punto de equilibrio sustentado, dilema ético resuelto, pieza inclusiva y devolución útil.","Cumple la mayoría, con omisiones menores.","Cumple de forma superficial; algún frente apenas se trata.","Sin fidelización, punto de equilibrio, ética ni equidad; sin devolución."],["Comunicación escrita, oral y trabajo colaborativo","Informe sin errores, APA 7; sustentación clara y a tiempo; roles claros y aporte de todos.","Errores menores; la mayoría contribuye.","Estructura deficiente; sustentación poco clara.","Desorganizado; fuera de tiempo; aporte desigual."]]}},{"id":"mkt4","nombre":"MKT 4","ciclo":"IV Ciclo","titulo":"Plan estratégico de marca y experiencia del cliente en el entorno digital","estudiantes":["Huamani Vargas Sara Andrea","Lopez Valiente Keren Sabrina","Torres Benegas Nicolle Lucia"],"unidades":[{"id":"ME","nombre":"Marketing Estratégico"},{"id":"GM","nombre":"Gestión de Marca"},{"id":"CEM","nombre":"Customer Experience Management"},{"id":"ECD","nombre":"Entorno Comercial Digital"},{"id":"EMP","nombre":"Emprendimiento"},{"id":"LID","nombre":"Liderazgo Personal y Profesional"},{"id":"GEN","nombre":"General / Coordinación"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"p1","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.1 Presentación de la organización, misión, visión y UEN","ud":"ME"},{"id":"p2","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.2 Análisis del macroentorno (PESTEL) y tendencias","ud":"ME"},{"id":"p3","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.3 Cinco Fuerzas de Porter y mapa competitivo","ud":"ME"},{"id":"p4","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.4 Matriz FODA, Matriz EFI y Matriz EFE","ud":"ME"},{"id":"p5","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.5 Segmentación, mercado meta y Buyer Persona","ud":"ME"},{"id":"p6","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.6 Estrategias competitivas (Porter y Matriz Ansoff)","ud":"ME"},{"id":"p7","cap":"Capítulo 2 · Plataforma de marca","t":"2.1 Auditoría de marca: identidad, imagen, reputación y personalidad","ud":"GM"},{"id":"p8","cap":"Capítulo 2 · Plataforma de marca","t":"2.2 Mapa de posicionamiento y diferenciación competitiva","ud":"GM"},{"id":"p9","cap":"Capítulo 2 · Plataforma de marca","t":"2.3 Plataforma de marca: Brand Key, Brand Essence y promesa","ud":"GM"},{"id":"p10","cap":"Capítulo 2 · Plataforma de marca","t":"2.4 Identidad visual y verbal: naming y tono de comunicación","ud":"GM"},{"id":"p11","cap":"Capítulo 2 · Plataforma de marca","t":"2.5 Arquitectura de marca, extensiones y branding digital","ud":"GM"},{"id":"p12","cap":"Capítulo 2 · Plataforma de marca","t":"2.6 Medición del Brand Equity (modelos de Aaker y Keller)","ud":"GM"},{"id":"p13","cap":"Capítulo 3 · Experiencia del cliente","t":"3.1 Comportamiento del consumidor y segmentación por experiencias","ud":"CEM"},{"id":"p14","cap":"Capítulo 3 · Experiencia del cliente","t":"3.2 Customer Journey Map: touchpoints y momentos de verdad","ud":"CEM"},{"id":"p15","cap":"Capítulo 3 · Experiencia del cliente","t":"3.3 Identificación de brechas en la experiencia actual","ud":"CEM"},{"id":"p16","cap":"Capítulo 3 · Experiencia del cliente","t":"3.4 Calidad del servicio (SERVQUAL / SERVPERF) y reclamos","ud":"CEM"},{"id":"p17","cap":"Capítulo 3 · Experiencia del cliente","t":"3.5 Estrategia de fidelización y experiencia omnicanal","ud":"CEM"},{"id":"p18","cap":"Capítulo 3 · Experiencia del cliente","t":"3.6 Indicadores de experiencia: NPS, CSAT, CES y CLV","ud":"CEM"},{"id":"p19","cap":"Capítulo 4 · Comercialización digital","t":"4.1 Diagnóstico del ecosistema comercial digital","ud":"ECD"},{"id":"p20","cap":"Capítulo 4 · Comercialización digital","t":"4.2 Evaluación del modelo de negocio digital","ud":"ECD"},{"id":"p21","cap":"Capítulo 4 · Comercialización digital","t":"4.3 Canales digitales y estrategia de presencia online","ud":"ECD"},{"id":"p22","cap":"Capítulo 4 · Comercialización digital","t":"4.4 Embudo de conversión, medios de pago y última milla","ud":"ECD"},{"id":"p23","cap":"Capítulo 4 · Comercialización digital","t":"4.5 Herramientas tecnológicas: CRM, automatización y chatbots","ud":"ECD"},{"id":"p24","cap":"Capítulo 4 · Comercialización digital","t":"4.6 Indicadores digitales: conversión, ticket promedio, CAC, ROI y LTV","ud":"ECD"},{"id":"p25","cap":"Capítulo 5 · Modelo de negocio","t":"5.1 Construcción del Business Model Canvas","ud":"EMP"},{"id":"p26","cap":"Capítulo 5 · Modelo de negocio","t":"5.2 Portafolio de productos o servicios y propuesta de valor","ud":"EMP"},{"id":"p27","cap":"Capítulo 5 · Modelo de negocio","t":"5.3 Estructura de costos y fijación de precios","ud":"EMP"},{"id":"p28","cap":"Capítulo 5 · Modelo de negocio","t":"5.4 Proyección de resultados y sostenibilidad económica","ud":"EMP"},{"id":"p29","cap":"Capítulo 6 · Implementación y control","t":"6.1 Plan de acción, cronograma, presupuesto y recursos","ud":"ME"},{"id":"p30","cap":"Capítulo 6 · Implementación y control","t":"6.2 Sistema de control: KPI y Balanced Scorecard de marketing","ud":"ME"},{"id":"p31","cap":"Capítulo 6 · Implementación y control","t":"6.3 Organización del equipo: roles, metas SMART y colaboración","ud":"LID"},{"id":"p32","cap":"Capítulo 6 · Implementación y control","t":"6.4 Liderazgo responsable: enfoque ético, social y ambiental","ud":"LID"},{"id":"p33","cap":"Cierre","t":"Conclusiones, recomendaciones y bibliografía APA 7.ª ed.","ud":"GEN"},{"id":"p34","cap":"Anexos","t":"A.1 Customer Journey Map e instrumentos de medición","ud":"CEM"},{"id":"p35","cap":"Anexos","t":"A.2 Manual de marca y evidencias de identidad visual","ud":"GM"},{"id":"p36","cap":"Anexos","t":"A.3 Hojas de cálculo de costeo, precios y proyección","ud":"EMP"},{"id":"p37","cap":"Anexos","t":"A.4 Evidencias de presencia digital y reportes de indicadores","ud":"ECD"},{"id":"p38","cap":"Anexos","t":"A.5 Acta de distribución de roles y reflexión crítica del equipo","ud":"LID"},{"id":"p39","cap":"Sustentación","t":"Presentación ejecutiva y defensa oral (25 minutos)","ud":"GEN"}]}]}</script>
+<script id="estructura" type="application/json">{"periodo":"2026-II","ciclos":[{"id":"mkt1","nombre":"MKT 1","ciclo":"I Ciclo","titulo":"Análisis integral de un producto arequipeño","estudiantes":["Briceño Cjuro Yasmin","Ccoyllulli Conza Estefani","Iquiapaza Cutipa Eymi Angeles","Pacsi Ibañez Ruth Vanessa","Salas Trelles Nicole Naomi","Torres Benegas Daniela Fiorela"],"unidades":[{"id":"FM","nombre":"Fundamentos de Marketing"},{"id":"ARE","nombre":"Análisis de la Realidad Económica"},{"id":"MA","nombre":"Matemática Aplicada"},{"id":"CC","nombre":"Comportamiento del Consumidor"},{"id":"TC","nombre":"Trabajo Colaborativo"},{"id":"CE","nombre":"Comunicación Efectiva"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"CE"},{"id":"p1","cap":"Preliminares","t":"Presentación del equipo y distribución de roles","ud":"TC"},{"id":"p2","cap":"Capítulo 1 · Marco teórico","t":"1.1 Antecedentes de la marca, empresa o producto","ud":"FM"},{"id":"p3","cap":"Capítulo 1 · Marco teórico","t":"1.2 Desarrollo monográfico de conceptos económicos (PBI, IPC, inflación)","ud":"ARE"},{"id":"p4","cap":"Capítulo 1 · Marco teórico","t":"1.2.5 Diagnóstico socioeconómico de la región Arequipa","ud":"ARE"},{"id":"p5","cap":"Capítulo 2 · Análisis de la información","t":"2.1 Método de investigación y elaboración del instrumento","ud":"CC"},{"id":"p6","cap":"Capítulo 2 · Análisis de la información","t":"2.2 Determinación del público objetivo y factores del consumidor","ud":"CC"},{"id":"p7","cap":"Capítulo 2 · Análisis de la información","t":"2.3 Propuesta de valor y posicionamiento buscado","ud":"FM"},{"id":"p8","cap":"Capítulo 2 · Análisis de la información","t":"2.4 Producto: tipos y ciclo de vida","ud":"FM"},{"id":"p9","cap":"Capítulo 2 · Análisis de la información","t":"2.5 Precio: análisis de precios y estado de resultados","ud":"FM"},{"id":"p10","cap":"Capítulo 2 · Análisis de la información","t":"2.5.3 Cálculo de márgenes de utilidad (bruta, neta y operativa)","ud":"MA"},{"id":"p11","cap":"Capítulo 2 · Análisis de la información","t":"2.6 Distribución (Plaza) y canales","ud":"FM"},{"id":"p12","cap":"Capítulo 2 · Análisis de la información","t":"2.7 Comunicación (Promoción)","ud":"FM"},{"id":"p13","cap":"Capítulo 3 · Propuesta de campaña","t":"3.1 Diseño de la estrategia de campaña, insight y canales","ud":"FM"},{"id":"p14","cap":"Capítulo 3 · Propuesta de campaña","t":"3.1.2 Análisis de insights del consumidor","ud":"CC"},{"id":"p15","cap":"Capítulo 3 · Propuesta de campaña","t":"3.2 Proyecciones, flujo de caja e indicadores de rentabilidad","ud":"MA"},{"id":"p16","cap":"Cierre","t":"Conclusiones y recomendaciones","ud":"CE"},{"id":"p17","cap":"Cierre","t":"Bibliografía y referencias en formato APA 7.ª ed.","ud":"CE"},{"id":"p18","cap":"Anexos","t":"A.1 Instrumento aplicado y tabulación de resultados","ud":"CC"},{"id":"p19","cap":"Anexos","t":"A.2 Tablas y evidencia de los cálculos financieros","ud":"MA"},{"id":"p20","cap":"Anexos","t":"A.3 Acta de conformación del equipo y registro de avances","ud":"TC"},{"id":"p21","cap":"Sustentación","t":"Presentación visual y sustentación oral (15 minutos)","ud":"CE"}]},{"id":"mkt2","nombre":"MKT 2","ciclo":"II Ciclo","titulo":"Innovación de producto con enfoque sostenible","estudiantes":["Ccacyavilca Chara Nelida","Chayña Pérez Prudencio Américo","Diaz Quilla Corayma Anyelina","Huamani Quispe Diana","Paredes Rondón Valeria De Los Ángeles","Pinto Mendoza Rodrigo"],"unidades":[{"id":"CRE","nombre":"Creatividad Comercial"},{"id":"ICT","nombre":"Investigación Cuantitativa"},{"id":"ICL","nombre":"Investigación Cualitativa"},{"id":"EST","nombre":"Estadística Aplicada"},{"id":"SP","nombre":"Solución de Problemas"},{"id":"CA","nombre":"Cultura Ambiental"},{"id":"GEN","nombre":"Todos los docentes"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"p1","cap":"Capítulo 1 · Marco teórico","t":"1.1 Selección y justificación del tema a desarrollar","ud":"CRE"},{"id":"p2","cap":"Capítulo 1 · Marco teórico","t":"1.2 Antecedentes del producto o servicio","ud":"CRE"},{"id":"p3","cap":"Capítulo 1 · Marco teórico","t":"1.3.1 Sostenibilidad, conciencia ambiental y servicios ecosistémicos","ud":"CA"},{"id":"p4","cap":"Capítulo 1 · Marco teórico","t":"1.3.2 Normativa ambiental peruana, ISO 14001 y EMAS","ud":"CA"},{"id":"p5","cap":"Capítulo 1 · Marco teórico","t":"1.3.3 Fundamentos de identificación y solución de problemas","ud":"SP"},{"id":"p6","cap":"Capítulo 2 · Análisis de la información","t":"2.1 Problemática comercial: FODA, Ishikawa y 5 porqués","ud":"SP"},{"id":"p7","cap":"Capítulo 2 · Análisis de la información","t":"2.2.1 Planteamiento del problema, variables e hipótesis","ud":"ICT"},{"id":"p8","cap":"Capítulo 2 · Análisis de la información","t":"2.2.2 Técnicas de muestreo y tamaño de la muestra","ud":"ICT"},{"id":"p9","cap":"Capítulo 2 · Análisis de la información","t":"2.2.3 Diseño de instrumentos cuantitativos y escala de Likert","ud":"ICT"},{"id":"p10","cap":"Capítulo 2 · Análisis de la información","t":"2.2.4 Diseño de instrumentos cualitativos: entrevistas y focus group","ud":"ICL"},{"id":"p11","cap":"Capítulo 2 · Análisis de la información","t":"2.3.1 Procesamiento de datos en Excel o SPSS","ud":"EST"},{"id":"p12","cap":"Capítulo 2 · Análisis de la información","t":"2.3.2 Estadística descriptiva: tendencia central y dispersión","ud":"EST"},{"id":"p13","cap":"Capítulo 2 · Análisis de la información","t":"2.3.3 Gráficos, intervalos de confianza y pruebas de hipótesis","ud":"EST"},{"id":"p14","cap":"Capítulo 2 · Análisis de la información","t":"2.3.4 Sistematización de hallazgos cualitativos e insights","ud":"ICL"},{"id":"p15","cap":"Capítulo 2 · Análisis de la información","t":"2.4 Determinación del público objetivo","ud":"ICT"},{"id":"p16","cap":"Capítulo 2 · Análisis de la información","t":"2.5 Propuesta de valor, imagen y posicionamiento actual","ud":"CRE"},{"id":"p17","cap":"Capítulo 2 · Análisis de la información","t":"2.6.1 Estudio del producto: percepción, uso y satisfacción","ud":"ICT"},{"id":"p18","cap":"Capítulo 2 · Análisis de la información","t":"2.6.2 Evaluación del impacto ambiental del producto actual","ud":"CA"},{"id":"p19","cap":"Capítulo 3 · Propuesta de innovación","t":"3.1 Estrategia innovadora: Design Thinking, Lean Startup y storytelling","ud":"CRE"},{"id":"p20","cap":"Capítulo 3 · Propuesta de innovación","t":"3.2 Acciones eco-eficientes integradas a la propuesta","ud":"CA"},{"id":"p21","cap":"Capítulo 3 · Propuesta de innovación","t":"3.3 Viabilidad: matriz de priorización, costo-beneficio y KPI","ud":"SP"},{"id":"p22","cap":"Cierre","t":"Conclusiones, recomendaciones y bibliografía APA 7.ª ed.","ud":"GEN"},{"id":"p23","cap":"Anexos","t":"A.1 Prototipo del producto y evidencias del prototipado","ud":"CRE"},{"id":"p24","cap":"Anexos","t":"A.2 Instrumentos de recolección de datos aplicados","ud":"ICL"},{"id":"p25","cap":"Anexos","t":"A.3 Bases de datos y reportes de salida del software estadístico","ud":"EST"},{"id":"p26","cap":"Sustentación","t":"Presentación ejecutiva y defensa oral (20 minutos)","ud":"GEN"}]},{"id":"mkt3","nombre":"MKT 3","ciclo":"III Ciclo","titulo":"Análisis del marketing de servicios y propuesta de una nueva línea de servicio en una empresa arequipeña","estudiantes":["Aguirre Zegarra Antonio Steven","Apaza Jiménez Héctor Miguel","Huamanga Supa Flor Thalia","Mamani Mamani Yamilet Tania","Paredes Sangama Gabriel Tonny","Quiroga Castelo Josue Alexander"],"unidades":[{"id":"EP","nombre":"Estrategia de Producto"},{"id":"MS","nombre":"Marketing de Servicios"},{"id":"CRM","nombre":"Marketing Relacional y CRM"},{"id":"ACP","nombre":"Análisis de Costos y Presupuestos"},{"id":"ETI","nombre":"Ética y Ciudadanía"},{"id":"IG","nombre":"Igualdad de Género"},{"id":"GEN","nombre":"Todos los docentes"}],"puntos":[{"id":"s0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"s1","cap":"Capítulo 1 · Contexto y portafolio","t":"1.1 Presentación de la empresa y de su portafolio actual","ud":"EP"},{"id":"s2","cap":"Capítulo 1 · Contexto y portafolio","t":"1.2 Diagnóstico del portafolio con la Matriz BCG","ud":"EP"},{"id":"s3","cap":"Capítulo 1 · Contexto y portafolio","t":"1.3 Ciclo de vida y nivel de diferenciación del servicio principal","ud":"EP"},{"id":"s4","cap":"Capítulo 1 · Contexto y portafolio","t":"1.4 Diseño, empaque y storytelling vigentes de la marca","ud":"EP"},{"id":"s5","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.1 Características del servicio (intangibilidad, inseparabilidad, variabilidad, perecibilidad) y cómo se gestionan","ud":"MS"},{"id":"s6","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.2 Evaluación integral de las 7P del servicio actual","ud":"MS"},{"id":"s7","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.3 Calidad en la entrega y brechas en la experiencia del cliente","ud":"MS"},{"id":"s8","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.4 Gestión de reclamos y recuperación del servicio","ud":"MS"},{"id":"s9","cap":"Capítulo 2 · Marketing de servicios (eje central)","t":"2.5 Estrategias vigentes: fortalezas y brechas identificadas","ud":"MS"},{"id":"s10","cap":"Capítulo 3 · Diagnóstico relacional y fidelización","t":"3.1 Customer Journey y puntos de contacto actuales","ud":"CRM"},{"id":"s11","cap":"Capítulo 3 · Diagnóstico relacional y fidelización","t":"3.2 Satisfacción, lealtad y Valor del Cliente a Largo Plazo (CLV)","ud":"CRM"},{"id":"s12","cap":"Capítulo 3 · Diagnóstico relacional y fidelización","t":"3.3 Estrategias de retención y uso de herramientas CRM","ud":"CRM"},{"id":"s13","cap":"Capítulo 3 · Diagnóstico relacional y fidelización","t":"3.4 Implicancias para la nueva línea: automatización, gamificación y fidelización","ud":"CRM"},{"id":"s14","cap":"Capítulo 4 · Costos y capacidad financiera","t":"4.1 Clasificación de los costos actuales (fijos, variables, directos e indirectos)","ud":"ACP"},{"id":"s15","cap":"Capítulo 4 · Costos y capacidad financiera","t":"4.2 Costos del servicio y punto de equilibrio actual","ud":"ACP"},{"id":"s16","cap":"Capítulo 4 · Costos y capacidad financiera","t":"4.3 Índice costo-beneficio de las acciones de marketing","ud":"ACP"},{"id":"s17","cap":"Capítulo 4 · Costos y capacidad financiera","t":"4.4 Capacidad financiera y presupuesto referencial de la nueva línea","ud":"ACP"},{"id":"s18","cap":"Capítulo 5 · Cultura corporativa e inclusión","t":"5.1 Prácticas actuales de Responsabilidad Social Empresarial (RSE)","ud":"ETI"},{"id":"s19","cap":"Capítulo 5 · Cultura corporativa e inclusión","t":"5.2 Dilemas éticos en las operaciones y la publicidad","ud":"ETI"},{"id":"s20","cap":"Capítulo 5 · Cultura corporativa e inclusión","t":"5.3 Representación de género y estereotipos en la comunicación","ud":"IG"},{"id":"s21","cap":"Capítulo 5 · Cultura corporativa e inclusión","t":"5.4 Políticas de diversidad, equidad y prevención de la violencia laboral (variable Personas)","ud":"IG"},{"id":"s22","cap":"Capítulo 6 · Síntesis y oportunidad","t":"6.1 Oportunidades de innovación y sostenibilidad en el servicio","ud":"EP"},{"id":"s23","cap":"Capítulo 6 · Síntesis y oportunidad","t":"6.2 Oportunidad comercial y justificación de la nueva línea","ud":"EP"},{"id":"s24","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.1 Concepto, niveles y atributos del nuevo servicio","ud":"EP"},{"id":"s25","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.2 Público objetivo y propuesta de valor","ud":"EP"},{"id":"s26","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.3 Diferenciación y posicionamiento buscado","ud":"EP"},{"id":"s27","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.4 Empaque, identidad visual y storytelling","ud":"EP"},{"id":"s28","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.5 Estrategia de lanzamiento dentro del portafolio","ud":"EP"},{"id":"s29","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.6 Marketing Mix Ampliado (7P) de la nueva línea","ud":"MS"},{"id":"s30","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.7a Mecanismo de fidelización e indicador de seguimiento","ud":"CRM"},{"id":"s31","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.7b Punto de equilibrio sencillo de la nueva línea","ud":"ACP"},{"id":"s32","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.7c Dilema ético de la propuesta y su resolución","ud":"ETI"},{"id":"s33","cap":"Capítulo 7 · Diseño de la nueva línea de servicio","t":"7.7d Pieza de comunicación inclusiva","ud":"IG"},{"id":"s34","cap":"Cierre","t":"Conclusiones y recomendaciones estratégicas","ud":"GEN"},{"id":"s35","cap":"Cierre","t":"Bibliografía y referencias APA 7.ª ed.","ud":"GEN"},{"id":"s36","cap":"Anexos","t":"A.1 Excel con fórmulas activas: costos, punto de equilibrio y presupuestos","ud":"ACP"},{"id":"s37","cap":"Anexos","t":"A.2 Customer Journey Map y flujogramas de atención","ud":"MS"},{"id":"s38","cap":"Anexos","t":"A.3 Instrumentos de medición de la calidad y resumen de resultados","ud":"MS"},{"id":"s39","cap":"Anexos","t":"A.4a Análisis de publicidad y propuesta de manual ético","ud":"ETI"},{"id":"s40","cap":"Anexos","t":"A.4b Propuesta de políticas y manual de comunicación inclusiva","ud":"IG"},{"id":"s41","cap":"Anexos","t":"A.5 Ficha técnica, identidad visual y empaque de la nueva línea","ud":"EP"},{"id":"s42","cap":"Entregables finales","t":"Devolución a la empresa (documento de una página)","ud":"GEN"},{"id":"s43","cap":"Entregables finales","t":"Presentación ejecutiva y sustentación (20 minutos)","ud":"GEN"}],"guia":{"resumen":"El equipo actúa como consultor: analiza el marketing de servicios de una empresa arequipeña (eje central) y, a partir de las brechas que encuentra, propone una nueva línea de servicio complementaria con un programa de fidelización.","pasos":[["Analizar","Capítulo 2: características del servicio, 7P, calidad, brechas y reclamos, con evidencia propia."],["Complementar","Capítulos 1, 3, 4 y 5: portafolio (BCG), relación con el cliente (CLV), costos (punto de equilibrio) y cultura (ética y género)."],["Sintetizar","Capítulo 6: matriz de fortalezas y brechas; la oportunidad nace de al menos dos brechas del Capítulo 2."],["Diseñar","Capítulo 7: concepto, valor, posicionamiento, identidad, lanzamiento y 7P de la nueva línea, más su verificación (7.7)."]],"propuesta":"Servicio complementario o de valor agregado con programa de fidelización: membresía o suscripción, postventa o acompañamiento, servicio a medida para un segmento o servicio digital (reservas en línea, WhatsApp, delivery).","entregables":["Informe final de diagnóstico y propuesta (APA 7.ª ed., digital e impreso)","Ficha técnica de la nueva línea de servicio","Sustentación ejecutiva (máximo 20 minutos)","Devolución a la empresa (una página)","Repositorio de anexos: Excel con fórmulas, Customer Journey y flujogramas, instrumentos de calidad, evidencias gráficas y manuales"],"condiciones":["Informe de 40 a 55 páginas","Equipos de 2 a 3 estudiantes","Sustentación de 20 minutos","Formato APA 7.ª edición","Escala vigesimal; nota mínima aprobatoria 13"],"rubrica":[["Análisis del marketing de servicios (eje central)","Caracteriza el servicio, evalúa las 7P y mide calidad y brechas con evidencia propia.","Considera la mayoría de variables; brechas parcialmente sustentadas.","Superficial; omite variables de las 7P o de calidad.","No identifica brechas ni presenta evidencia."],["Diagnóstico complementario (portafolio, CRM, costos y cultura)","BCG, ciclo de vida, Customer Journey, CLV, punto de equilibrio, ética y género correctos y vinculados al análisis de servicios.","Correctos, con imprecisiones o vínculos débiles.","Incompletos o con errores; poca conexión.","Ausentes o erróneos; unidades aisladas."],["Síntesis y diseño de la nueva línea","Nace de al menos dos brechas del Cap. 2; concepto, valor, posicionamiento, identidad, lanzamiento y 7P innovadores, viables y coherentes.","Justificada en el diagnóstico, con imprecisiones en el diseño.","Poco desarrollada o con justificación débil.","Difusa o desconectada de los hallazgos."],["Coherencia, viabilidad y responsabilidad","Fidelización con indicador, punto de equilibrio sustentado, dilema ético resuelto, pieza inclusiva y devolución útil.","Cumple la mayoría, con omisiones menores.","Cumple de forma superficial; algún frente apenas se trata.","Sin fidelización, punto de equilibrio, ética ni equidad; sin devolución."],["Comunicación escrita, oral y trabajo colaborativo","Informe sin errores, APA 7; sustentación clara y a tiempo; roles claros y aporte de todos.","Errores menores; la mayoría contribuye.","Estructura deficiente; sustentación poco clara.","Desorganizado; fuera de tiempo; aporte desigual."]]}},{"id":"mkt4","nombre":"MKT 4","ciclo":"IV Ciclo","titulo":"Plan estratégico de marca y experiencia del cliente en el entorno digital","estudiantes":["Huamani Vargas Sara Andrea","Lopez Valiente Keren Sabrina","Torres Benegas Nicolle Lucia"],"unidades":[{"id":"ME","nombre":"Marketing Estratégico"},{"id":"GM","nombre":"Gestión de Marca"},{"id":"CEM","nombre":"Customer Experience Management"},{"id":"ECD","nombre":"Entorno Comercial Digital"},{"id":"EMP","nombre":"Emprendimiento"},{"id":"LID","nombre":"Liderazgo Personal y Profesional"},{"id":"GEN","nombre":"Todos los docentes"}],"puntos":[{"id":"p0","cap":"Preliminares","t":"Carátula, resumen ejecutivo, índice e introducción","ud":"GEN"},{"id":"p1","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.1 Presentación de la organización, misión, visión y UEN","ud":"ME"},{"id":"p2","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.2 Análisis del macroentorno (PESTEL) y tendencias","ud":"ME"},{"id":"p3","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.3 Cinco Fuerzas de Porter y mapa competitivo","ud":"ME"},{"id":"p4","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.4 Matriz FODA, Matriz EFI y Matriz EFE","ud":"ME"},{"id":"p5","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.5 Segmentación, mercado meta y Buyer Persona","ud":"ME"},{"id":"p6","cap":"Capítulo 1 · Diagnóstico estratégico","t":"1.6 Estrategias competitivas (Porter y Matriz Ansoff)","ud":"ME"},{"id":"p7","cap":"Capítulo 2 · Plataforma de marca","t":"2.1 Auditoría de marca: identidad, imagen, reputación y personalidad","ud":"GM"},{"id":"p8","cap":"Capítulo 2 · Plataforma de marca","t":"2.2 Mapa de posicionamiento y diferenciación competitiva","ud":"GM"},{"id":"p9","cap":"Capítulo 2 · Plataforma de marca","t":"2.3 Plataforma de marca: Brand Key, Brand Essence y promesa","ud":"GM"},{"id":"p10","cap":"Capítulo 2 · Plataforma de marca","t":"2.4 Identidad visual y verbal: naming y tono de comunicación","ud":"GM"},{"id":"p11","cap":"Capítulo 2 · Plataforma de marca","t":"2.5 Arquitectura de marca, extensiones y branding digital","ud":"GM"},{"id":"p12","cap":"Capítulo 2 · Plataforma de marca","t":"2.6 Medición del Brand Equity (modelos de Aaker y Keller)","ud":"GM"},{"id":"p13","cap":"Capítulo 3 · Experiencia del cliente","t":"3.1 Comportamiento del consumidor y segmentación por experiencias","ud":"CEM"},{"id":"p14","cap":"Capítulo 3 · Experiencia del cliente","t":"3.2 Customer Journey Map: touchpoints y momentos de verdad","ud":"CEM"},{"id":"p15","cap":"Capítulo 3 · Experiencia del cliente","t":"3.3 Identificación de brechas en la experiencia actual","ud":"CEM"},{"id":"p16","cap":"Capítulo 3 · Experiencia del cliente","t":"3.4 Calidad del servicio (SERVQUAL / SERVPERF) y reclamos","ud":"CEM"},{"id":"p17","cap":"Capítulo 3 · Experiencia del cliente","t":"3.5 Estrategia de fidelización y experiencia omnicanal","ud":"CEM"},{"id":"p18","cap":"Capítulo 3 · Experiencia del cliente","t":"3.6 Indicadores de experiencia: NPS, CSAT, CES y CLV","ud":"CEM"},{"id":"p19","cap":"Capítulo 4 · Comercialización digital","t":"4.1 Diagnóstico del ecosistema comercial digital","ud":"ECD"},{"id":"p20","cap":"Capítulo 4 · Comercialización digital","t":"4.2 Evaluación del modelo de negocio digital","ud":"ECD"},{"id":"p21","cap":"Capítulo 4 · Comercialización digital","t":"4.3 Canales digitales y estrategia de presencia online","ud":"ECD"},{"id":"p22","cap":"Capítulo 4 · Comercialización digital","t":"4.4 Embudo de conversión, medios de pago y última milla","ud":"ECD"},{"id":"p23","cap":"Capítulo 4 · Comercialización digital","t":"4.5 Herramientas tecnológicas: CRM, automatización y chatbots","ud":"ECD"},{"id":"p24","cap":"Capítulo 4 · Comercialización digital","t":"4.6 Indicadores digitales: conversión, ticket promedio, CAC, ROI y LTV","ud":"ECD"},{"id":"p25","cap":"Capítulo 5 · Modelo de negocio","t":"5.1 Construcción del Business Model Canvas","ud":"EMP"},{"id":"p26","cap":"Capítulo 5 · Modelo de negocio","t":"5.2 Portafolio de productos o servicios y propuesta de valor","ud":"EMP"},{"id":"p27","cap":"Capítulo 5 · Modelo de negocio","t":"5.3 Estructura de costos y fijación de precios","ud":"EMP"},{"id":"p28","cap":"Capítulo 5 · Modelo de negocio","t":"5.4 Proyección de resultados y sostenibilidad económica","ud":"EMP"},{"id":"p29","cap":"Capítulo 6 · Implementación y control","t":"6.1 Plan de acción, cronograma, presupuesto y recursos","ud":"ME"},{"id":"p30","cap":"Capítulo 6 · Implementación y control","t":"6.2 Sistema de control: KPI y Balanced Scorecard de marketing","ud":"ME"},{"id":"p31","cap":"Capítulo 6 · Implementación y control","t":"6.3 Organización del equipo: roles, metas SMART y colaboración","ud":"LID"},{"id":"p32","cap":"Capítulo 6 · Implementación y control","t":"6.4 Liderazgo responsable: enfoque ético, social y ambiental","ud":"LID"},{"id":"p33","cap":"Cierre","t":"Conclusiones, recomendaciones y bibliografía APA 7.ª ed.","ud":"GEN"},{"id":"p34","cap":"Anexos","t":"A.1 Customer Journey Map e instrumentos de medición","ud":"CEM"},{"id":"p35","cap":"Anexos","t":"A.2 Manual de marca y evidencias de identidad visual","ud":"GM"},{"id":"p36","cap":"Anexos","t":"A.3 Hojas de cálculo de costeo, precios y proyección","ud":"EMP"},{"id":"p37","cap":"Anexos","t":"A.4 Evidencias de presencia digital y reportes de indicadores","ud":"ECD"},{"id":"p38","cap":"Anexos","t":"A.5 Acta de distribución de roles y reflexión crítica del equipo","ud":"LID"},{"id":"p39","cap":"Sustentación","t":"Presentación ejecutiva y defensa oral (25 minutos)","ud":"GEN"}]}]}</script>
 <script>
 (function(){
 "use strict";
@@ -322,10 +351,94 @@ var MASTER_HASH = "bf49a7f1de6b01fede473760dcc3479082265bf419a694769c0431f1fc482
 var EST = ["Pendiente","En proceso","Observado","Aprobado"];
 var GLY = ["○","…","!","✓"];
 var TAB_COLORS = ["#F0544F","#F29E1F","#14A098","#7C5CFF","#E0457B","#2F80ED"];
+/* Color claro de fondo y color de texto para cada unidad didáctica, según su orden. */
+var UD_COLORS = [["#FFE1E1","#9E1C1C","#F4A3A3"],["#FFF0BF","#7A5200","#F2CF63"],["#D9F3E2","#14603A","#8FD9AD"],
+                 ["#DCEAFF","#1C4B8C","#9DC0F2"],["#ECE3FF","#553AA8","#BFA9F2"],["#FFE2F0","#9A1A57","#F2A6CB"],["#D7F2F4","#0A646B","#8ED6DC"]];
+function udColor(c, uid){
+  var n = 0;
+  for (var i=0;i<c.unidades.length;i++){ if (c.unidades[i].id === "GEN") continue; if (c.unidades[i].id === uid) return UD_COLORS[n % UD_COLORS.length]; n++; }
+  return null;
+}
+function udVisible(pt){ return !view.ud || pt.ud === view.ud || pt.ud === "GEN"; }
 var E = JSON.parse(document.getElementById("estructura").textContent);
 var view = { ciclo: E.ciclos[0].id, ud: "", eq: "", closed: {}, hideHello: false };
 var DATA = { grupos: {}, docentes: {}, avance: {} };
 var cargado = false, pendientes = 0, ultimoError = "", master = false;
+var EDU_MAIL = "eduardo.mamani@thomasjefferson.edu.pe", EDU_WSP = "51973590390";
+var prefs = { music: true, sfx: true, nombre: "" };
+try { var pp = JSON.parse(localStorage.getItem("ctrl-prefs") || "null"); if (pp) for (var kp in pp) prefs[kp] = pp[kp]; } catch(e){}
+function guardarPrefs(){ try{ localStorage.setItem("ctrl-prefs", JSON.stringify(prefs)); }catch(e){} }
+
+/* -------- sonidos (generados en el navegador, sin archivos) -------- */
+var AC = null;
+function ac(){
+  if (!AC){ var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); }
+  if (AC.state === "suspended" && !document.hidden) AC.resume();
+  return AC;
+}
+function tono(dest, f, t0, dur, vol, tipo, ataque){
+  var a = AC, o = a.createOscillator(), g = a.createGain();
+  o.type = tipo || "sine"; o.frequency.value = f;
+  ataque = ataque || 0.008;
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.linearRampToValueAtTime(vol, t0 + ataque);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g); g.connect(dest); o.start(t0); o.stop(t0 + dur + 0.05);
+}
+function sfx(tipo){
+  if (!prefs.sfx) return;
+  var a = ac(); if (!a) return;
+  var t = a.currentTime + 0.01, d = a.destination;
+  if (tipo === "ok"){ [523.25,659.25,783.99,1046.5].forEach(function(f,i){ tono(d, f, t+i*0.075, 0.35, 0.07, "triangle"); }); return; }
+  if (tipo === "save"){ tono(d, 659.25, t, 0.16, 0.06, "triangle"); tono(d, 987.77, t+0.08, 0.22, 0.05, "triangle"); return; }
+  if (tipo === "open"){ tono(d, 523.25, t, 0.14, 0.05, "sine"); tono(d, 783.99, t+0.06, 0.18, 0.045, "sine"); return; }
+  if (tipo === "err"){ tono(d, 233, t, 0.22, 0.06, "square"); tono(d, 196, t+0.12, 0.28, 0.05, "square"); return; }
+  tono(d, 880, t, 0.08, 0.045, "sine"); tono(d, 1318.5, t+0.03, 0.07, 0.022, "sine");
+}
+
+/* -------- música de fondo suave (acordes generados, libres de derechos) -------- */
+var MUS = { on:false, timer:null, out:null, next:0, paso:0 };
+var ACORDES = [[261.63,329.63,392.00,493.88],[220.00,261.63,329.63,392.00],[174.61,220.00,261.63,329.63],[196.00,246.94,293.66,392.00]];
+var ARPEGIO = [0,1,2,3,2,1,2,1];
+function programarMusica(){
+  var a = AC; if (!a || !MUS.on) return;
+  while (MUS.next < a.currentTime + 1.5){
+    var t = MUS.next, n = MUS.paso, acorde = ACORDES[Math.floor(n/8) % ACORDES.length];
+    if (n % 8 === 0){
+      for (var i=0;i<acorde.length;i++) tono(MUS.out, acorde[i], t, 4.4, 0.05, "sine", 1.2);
+      tono(MUS.out, acorde[0]/2, t, 3.9, 0.09, "sine", 0.3);
+    }
+    tono(MUS.out, acorde[ARPEGIO[n % 8]]*2, t, 0.9, 0.035, "triangle", 0.02);
+    MUS.next += 0.5; MUS.paso = (n + 1) % 32;
+  }
+}
+function iniciarMusica(){
+  if (MUS.on || !prefs.music) return;
+  var a = ac(); if (!a) return;
+  if (!MUS.out){
+    var lp = a.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1400;
+    MUS.out = a.createGain(); MUS.out.gain.value = 0.22; MUS.out.connect(lp); lp.connect(a.destination);
+  }
+  MUS.on = true; MUS.next = a.currentTime + 0.1;
+  programarMusica(); MUS.timer = setInterval(programarMusica, 300);
+}
+function pararMusica(){
+  MUS.on = false; clearInterval(MUS.timer); MUS.timer = null;
+  if (MUS.out && AC){ var g = MUS.out.gain, t = AC.currentTime; g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0.0001, t + 0.6);
+    setTimeout(function(){ if (!MUS.on && MUS.out){ MUS.out.disconnect(); MUS.out = null; } }, 800); }
+}
+/* El navegador solo permite sonar después del primer toque del usuario. */
+document.addEventListener("pointerdown", function(){ if (prefs.music) iniciarMusica(); }, true);
+document.addEventListener("visibilitychange", function(){
+  if (!AC) return;
+  if (document.hidden) AC.suspend(); else AC.resume();
+});
+/* Sonido suave en cada botón (el de Guardar tiene su propio sonido). */
+document.addEventListener("click", function(ev){
+  var b = ev.target && ev.target.closest && ev.target.closest("button, a.openg, .links a");
+  if (!b || b.getAttribute("data-act") === "apply" || b.id === "btnSfx") return;
+  sfx(b.classList.contains("st") || b.id === "eduf" ? "open" : "tap");
+}, true);
 
 try { var v = localStorage.getItem("ctrl-view"); if (v){ var pv = JSON.parse(v); if (pv && pv.ciclo){ for (var kv in pv) view[kv] = pv[kv]; } } } catch(e){}
 if (!view.closed || typeof view.closed !== "object") view.closed = {};
@@ -477,7 +590,9 @@ function tallyUD(c,uid){
 
 /* -------- render -------- */
 function renderTools(){
-  var h = '<span class="saved" id="status">' + (cargado ? "✓ Al día" : "Cargando…") + '</span>';
+  var h = '<span class="saved" id="status">' + (cargado ? "✓ Al día" : "Cargando…") + '</span>'+
+    '<button class="btn small ghost snd'+(prefs.music?'':' off')+'" id="btnMusic" title="Música de fondo">🎵 Música</button>'+
+    '<button class="btn small ghost snd'+(prefs.sfx?'':' off')+'" id="btnSfx" title="Sonidos de los botones">🔔 Sonidos</button>';
   if (master){
     h += '<span class="mtag">MODO MASTER</span>'+
          '<button class="btn small" id="btnRefresh">↻ Actualizar</button>'+
@@ -496,7 +611,7 @@ function renderTabs(){
   for (var i=0;i<E.ciclos.length;i++){
     var c=E.ciclos[i];
     h += '<button class="tab" role="tab" style="--tc:'+TAB_COLORS[i%TAB_COLORS.length]+'" data-ciclo="'+c.id+'" aria-selected="'+(c.id===view.ciclo)+'">'+
-         esc(c.nombre)+'<span class="sub">'+esc(c.ciclo)+'</span></button>';
+         '<b>MKT</b> '+esc(c.ciclo)+'</button>';
   }
   document.getElementById("tabs").innerHTML = h;
 }
@@ -564,8 +679,7 @@ function render(){
 
   var gs = grupos(c.id), tl = tallyCiclo(c);
   h += renderHello();
-  h += '<section class="proj"><span class="k">'+esc(c.nombre)+' · '+esc(c.ciclo)+'</span><h2>'+esc(c.titulo)+'</h2>'+
-       '<div class="meta">'+c.puntos.length+' puntos por revisar · '+gs.length+' grupo'+(gs.length===1?'':'s')+' · '+c.unidades.length+' unidades didácticas</div></section>';
+  h += '<section class="proj"><h2>'+esc(c.titulo)+'</h2></section>';
 
   h += '<div class="cards">';
   h += '<div class="card main"><span class="k">Avance del ciclo</span><div class="v">'+pct(tl.t[3],tl.total)+'%</div><div class="bar"><i style="width:'+pct(tl.t[3],tl.total)+'%"></i></div></div>';
@@ -579,14 +693,14 @@ function render(){
 
   h += '<div class="filters">';
   h += '<div class="field"><label for="fud">Mi unidad didáctica</label><select id="fud"'+(view.ud?' class="on"':'')+'><option value="">Ver todas las unidades</option>';
-  for (var i=0;i<c.unidades.length;i++){ var u=c.unidades[i], dn=docenteDe(c.id,u.id);
-    h += '<option value="'+esc(u.id)+'"'+(view.ud===u.id?" selected":"")+'>'+esc(u.nombre)+(dn?" — "+esc(dn):"")+'</option>'; }
+  for (var i=0;i<c.unidades.length;i++){ var u=c.unidades[i], dn=docenteDe(c.id,u.id); if (u.id === "GEN") continue;
+    h += '<option value="'+esc(u.id)+'"'+(view.ud===u.id?" selected":"")+'>'+esc(u.nombre)+(dn?" / "+esc(dn):"")+'</option>'; }
   h += '</select></div>';
   h += '<div class="field"><label for="feq">Grupo</label><select id="feq"'+(view.eq?' class="on"':'')+'><option value="">Ver todos los grupos</option>';
   for (var j=0;j<gs.length;j++) h += '<option value="'+esc(gs[j].id)+'"'+(view.eq===gs[j].id?" selected":"")+'>'+esc(etiquetaGrupo(gs[j]))+'</option>';
   h += '</select></div>';
   h += '<div class="tip"><span class="bubble">'+(view.ud ? '¡Listo! Ahora ves solo los puntos de tu unidad.' : 'Elige tu unidad aquí y verás solo tus puntos.')+'</span>'+
-       '<img src="img/personaje-consejo.webp" alt="" width="229" height="480"></div>';
+       '<img src="img/personaje-guia.webp" alt="" width="261" height="480"></div>';
   h += '</div>';
 
   h += '<div class="legend">';
@@ -610,20 +724,22 @@ function render(){
     var lastCap = null, closed = false;
     for (var p=0;p<c.puntos.length;p++){
       var pt = c.puntos[p];
-      if (view.ud && pt.ud !== view.ud) continue;
+      if (!udVisible(pt)) continue;
       if (pt.cap !== lastCap){
         lastCap = pt.cap; closed = !!view.closed[capKey(c.id,pt.cap)];
         var nOk = 0, nAll = 0;
         for (var y=0;y<c.puntos.length;y++){ var py = c.puntos[y];
-          if (py.cap !== pt.cap || (view.ud && py.ud !== view.ud)) continue;
+          if (py.cap !== pt.cap || !udVisible(py)) continue;
           for (var x=0;x<vis.length;x++){ nAll++; if (cellOf(c.id,py.id,vis[x].id).e===3) nOk++; } }
         h += '<tr class="caprow'+(closed?' closed':'')+'" data-cap="'+esc(pt.cap)+'"><td colspan="'+(vis.length+1)+'">'+
              '<span class="cap-ico">▾</span>'+esc(pt.cap)+'<span class="cap-n">'+nOk+' de '+nAll+' ✓</span></td></tr>';
       }
       if (closed) continue;
       var un = unidad(c, pt.ud), dn2 = docenteDe(c.id, pt.ud);
-      h += '<tr><td class="stub"><span class="ptxt">'+esc(pt.t)+'</span>'+
-           '<span class="ud'+(view.ud?' mine':'')+'">'+esc(un?un.nombre:pt.ud)+(dn2?' · '+esc(dn2):'')+'</span></td>';
+      var uc = udColor(c, pt.ud);
+      h += '<tr><td class="stub"'+(uc?' style="--udc:'+uc[2]+'"':'')+'><span class="ptxt">'+esc(pt.t)+'</span>'+
+           (pt.ud === "GEN" ? '<span class="ud todos">👥 Lo revisan todos los docentes</span>'
+             : '<span class="ud"'+(uc?' style="background:'+uc[0]+';color:'+uc[1]+'"':'')+'>'+esc(un?un.nombre:pt.ud)+(dn2?' / '+esc(dn2):'')+'</span>')+'</td>';
       for (var q=0;q<vis.length;q++){
         var cl = cellOf(c.id, pt.id, vis[q].id);
         h += '<td class="cell" data-gname="'+esc(etiquetaGrupo(vis[q]))+'"><button class="st s'+cl.e+'" data-p="'+esc(pt.id)+'" data-g="'+esc(vis[q].id)+'" title="'+esc(cl.n||EST[cl.e])+'">'+
@@ -650,11 +766,13 @@ function renderMaster(c, gs){
   var h = '<details class="box master-box" data-k="master" open style="margin-top:22px"><summary><span class="pl"></span>⚙️ Configuración del ciclo <span class="hint">· solo modo master</span></summary><div class="box-body"><div class="grid2">';
   h += '<div><p class="subh">Docente de cada unidad didáctica</p>';
   for (var a=0;a<c.unidades.length;a++){
+    if (c.unidades[a].id === "GEN") continue;
     h += '<div class="rowin"><span class="lbl">'+esc(c.unidades[a].nombre)+'</span>'+
          '<input type="text" data-kind="doc" data-id="'+esc(c.unidades[a].id)+'" value="'+esc(docenteDe(c.id,c.unidades[a].id))+'" placeholder="Nombre del docente"></div>';
   }
   h += '<p class="subh">Avance por unidad didáctica</p>';
   for (var b=0;b<c.unidades.length;b++){
+    if (c.unidades[b].id === "GEN") continue;
     var tu = tallyUD(c, c.unidades[b].id);
     h += '<div class="udprog"><span class="nm">'+esc(c.unidades[b].nombre)+'</span><span class="bar"><i style="width:'+tu+'%"></i></span><span class="pc">'+tu+'%</span></div>';
   }
@@ -731,6 +849,7 @@ function openEstado(btn){
     if (act.getAttribute("data-act")==="close"){ closeModal(); return; }
     var nuevo = { e:chosen, n:d.querySelector("#popn").value.trim(), l:d.querySelector("#popl").value.trim() };
     DATA.avance[c.id+"|"+pid+"|"+gid] = nuevo;
+    sfx(nuevo.e === 3 && cell.e !== 3 ? "ok" : "save");
     closeModal(); renderKeep(); guardarAvance(c.id, pid, gid, nuevo);
   });
   var on = d.querySelector(".opt.on"); if (on) on.focus({preventScroll:true});
@@ -760,6 +879,34 @@ function openMaster(){
   inp.focus({preventScroll:true});
 }
 
+function openEduardo(){
+  var c = cic();
+  var d = abrirVentana(
+    '<div class="who">Mensaje para Eduardo</div><h3>¿Qué te gustaría cambiar o mejorar?</h3>'+
+    '<p class="pt">Escribe tu pedido y envíalo por WhatsApp o por correo. Eduardo lo revisará.</p>'+
+    '<label class="l" for="enom">Tu nombre</label><input type="text" id="enom" value="'+esc(prefs.nombre)+'" placeholder="Ejemplo: Natalia Medina">'+
+    '<label class="l" for="emsg">Tu mensaje</label><textarea id="emsg" placeholder="Ejemplo: En '+esc(c.nombre)+', agregar el punto…" style="min-height:120px"></textarea>'+
+    '<p class="err" id="eerr"></p>'+
+    '<div class="two"><button class="btn wa" data-act="wa">💬 Enviar por WhatsApp</button><button class="btn mail" data-act="mail">✉️ Enviar por correo</button></div>'+
+    '<div class="row" style="margin-top:10px"><button class="btn ghost" data-act="close">Cancelar</button></div>');
+  function armar(){
+    var nom = d.querySelector("#enom").value.trim(), msg = d.querySelector("#emsg").value.trim();
+    if (!msg){ d.querySelector("#eerr").textContent = "Escribe tu mensaje antes de enviarlo."; sfx("err"); d.querySelector("#emsg").focus(); return null; }
+    prefs.nombre = nom; guardarPrefs();
+    return "Hola Eduardo, te escribo desde el tablero de avance (" + c.nombre + " · " + c.ciclo + ").\n\n" + msg + (nom ? "\n\n— " + nom : "");
+  }
+  d.addEventListener("click", function(ev){
+    var act = ev.target.closest("[data-act]"); if (!act) return;
+    var a = act.getAttribute("data-act");
+    if (a === "close"){ closeModal(); return; }
+    var texto = armar(); if (!texto) return;
+    if (a === "wa") window.open("https://wa.me/" + EDU_WSP + "?text=" + encodeURIComponent(texto), "_blank", "noopener");
+    if (a === "mail") window.location.href = "mailto:" + EDU_MAIL + "?subject=" + encodeURIComponent("Tablero de avance MKT: pedido de cambio") + "&body=" + encodeURIComponent(texto);
+    sfx("save"); closeModal();
+  });
+  d.querySelector("#emsg").focus({preventScroll:true});
+}
+
 document.addEventListener("keydown", function(ev){ if (ev.key === "Escape") closeModal(); });
 
 document.addEventListener("click", function(ev){
@@ -776,6 +923,9 @@ document.addEventListener("click", function(ev){
   var b = t.closest("button"); if (!b) return;
   if (b.id === "hideHello"){ view.hideHello = true; guardarVista(); renderKeep(); return; }
   if (b.id === "btnRetry"){ cargar(false); return; }
+  if (b.id === "btnMusic"){ prefs.music = !prefs.music; guardarPrefs(); if (prefs.music) iniciarMusica(); else pararMusica(); renderTools(); return; }
+  if (b.id === "btnSfx"){ prefs.sfx = !prefs.sfx; guardarPrefs(); renderTools(); if (prefs.sfx) sfx("tap"); return; }
+  if (b.id === "eduf"){ openEduardo(); return; }
   if (b.id === "btnMaster"){ openMaster(); return; }
   if (b.id === "btnLogout"){ master = false; try { sessionStorage.removeItem("ctrl-master"); } catch(e){} renderKeep(); return; }
   if (b.id === "btnRefresh"){ cargar(false); return; }
